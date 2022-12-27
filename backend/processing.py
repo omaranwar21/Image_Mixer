@@ -102,3 +102,29 @@ def construct_image(magnitude, phase):
     cv2.imwrite("./files/images/result.png", image_combined)
     # return image_combined
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+
+def points(x_percentage, y_percentage, width, height):
+    coordinates = []
+
+    x_minimum = (x_percentage/100)*1400
+    coordinates.append(x_minimum)
+    x_maximum = ((x_percentage/100)*1400) + ((width/100)*1400)
+    coordinates.append(x_maximum)
+
+    y_minimum = (y_percentage/100)*1400
+    coordinates.append(y_minimum)
+    y_maximum = ((y_percentage/100)*1400) + ((height/100)*1400)
+    coordinates.append(y_maximum)
+
+    return coordinates
+
+def crop_2d_img(image,coordinates):
+    
+    max_height= image.shape[0]-1
+    cutted_img = np.zeros_like(image)
+
+    for x in range(int(coordinates[0]),int(coordinates[1])):
+        for y in range(int(coordinates[2]),int(coordinates[3])):
+            cutted_img[max_height-y,x] = image[max_height-y,x]
+    return cutted_img
