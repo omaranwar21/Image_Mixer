@@ -30,7 +30,7 @@ def img():
         fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
         image.save(fullPath)
         processing.resize_image(fullPath)
-        return {"mag_img_url": "http://127.0.0.1:5000/api/img?img="+imgId, "imgId": imgId}, 200
+        return {"img_url": "http://127.0.0.1:5000/api/img?img="+imgId, "imgId": imgId}, 200
 
 
 @app.route('/api/combImg', methods=['GET'])
