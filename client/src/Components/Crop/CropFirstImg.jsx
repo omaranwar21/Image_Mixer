@@ -80,13 +80,13 @@ const CropFirstImg = () => {
                 {selectOriginalFirst === true ? (
                     <ReactCrop crop={firstCrop} onChange={(c, per) => setFirstCrop(per)}
                         onComplete={(px, percent) => {
-                            // axios.post('',
-                            //     formData
-                            // ).then((response) => {
-                            //     console.log(response)
-                            // }).catch((err) => {
-                            //     console.log(err)
-                            // })
+                            axios.post('/select',
+                            percent
+                            ).then((response) => {
+                                console.log(response)
+                            }).catch((err) => {
+                                console.log(err)
+                            })
                         }}>
                         <img style={{ width: originalURL !== null ? "20rem" : "0", height: originalURL !== null? "20rem" : "0" }} src={originalURL} />
                     </ReactCrop>

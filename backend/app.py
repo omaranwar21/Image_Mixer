@@ -47,4 +47,17 @@ def combImgs():
 def select():
     if request.method == 'POST':
         data = request.get_json()
+        height = data['height']
+        width = data['width']
+        x = data['x']
+        y = data['y']
+        print(height, width, x, y)
         return {'data': data}
+
+# @app.route('/api/construct', methods=['GET', 'POST'])
+# def construct():
+#     magId = str(request.args.get('magId'))
+#     phaseId = str(request.args.get('phaseId'))
+#     if request.method == 'GET':
+
+#         return {'data': data}
