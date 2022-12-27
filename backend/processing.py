@@ -20,22 +20,16 @@ class counter:
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def fourier_2D(first_image_path, second_image_path):
+def fourier_2D(image_path):
 
     # first image as gray scale (0) --> for gray scale
-    first_image = cv2.imread(first_image_path, 0)
-    # second_image = cv2.imread(second_image_path, 0) #second image as gray scale (0) --> for gray scale
-
+    image = cv2.imread(image_path, 0)
     # Resizing for phase and magnitude extraction for the first image.
-    first_image = cv2.resize(first_image, dsize=(1400, 1400))
-    # second_image = cv2.resize(second_image, dsize = (1400, 1400)) # Resizing for phase and magnitude extraction for the second image.
-
+    image = cv2.resize(image, dsize=(1400, 1400))
     # calling user defined function to get magnitude and phase of the first image
-    first_image_magnitude, first_image_phase = magnitude_phase(first_image)
-    # second_image_magnitude, second_image_phase = magnitude_phase(second_image) # calling user defined function to get magnitude and phase of the first image
+    image_magnitude, image_phase = magnitude_phase(image)
 
-    return first_image_magnitude, first_image_phase
-    # , second_image_magnitude, second_image_phase
+    return image_magnitude, image_phase
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
@@ -57,10 +51,14 @@ def magnitude_phase(image):
 
 def plot_magnitude_phase(image_path):
     id = image_path.split()
-    mag, phase = fourier_2D(image_path, image_path)
+    mag, phase = fourier_2D(image_path)
     inverse_mag = np.fft.ifft2(mag)
-    plt.imshow(np.abs(np.log(inverse_mag)))
-    plt.savefig('./files/magnitude')
+    inverse_phase = np.fft.ifft2(phase)
+    plt.imshow(np.abs(np.log(inverse_mag)), cmap="gray")
+    plt.savefig('./files/magnitude/mag'+str(counter.imgId))
+    plt.clf()
+    plt.imshow(np.abs(np.log(inverse_phase)), cmap="gray")
+    plt.savefig('./files/phase/phase'+str(counter.imgId))
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: magnitude and phase of the needed constructed image

@@ -15,9 +15,8 @@ CORS(app)
 def img():
     # get the image
     if request.method == 'GET':
-        id = request.args.get('imgId')
-        imgPath = str(id) + '.jpg'
-        return send_from_directory(directory=app.config['IMG_FOLDER'], path=imgPath)
+        id = request.args.get('img')
+        return send_from_directory(directory=app.config['IMG_FOLDER'], path=img)
 
     # the upload functionality
     if request.method == 'POST':
@@ -29,7 +28,8 @@ def img():
         fullPath = os.path.join(IMG_FOLDER, imgId + '.jpg')
         file.save(fullPath)
         plot_magnitude_phase(fullPath)
-        return {'img_id': imgId}, 200
+        counter.imgId += 1
+        return {'img_id': imgId,"mag_img_url": "http://127.0.0.1:5000/api/img"}, 200
 
 
 @app.route('/api/select', methods=['GET', 'POST'])
