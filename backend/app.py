@@ -39,6 +39,8 @@ def combImgs():
     fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
     processing.plot_magnitude_phase(fullPath)
     processing.counter.imgId += 1
+    print(processing.db.magnitude)
+    print(processing.db.phase)
     return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=mag"+imgId,
             "phase_img_url": "http://127.0.0.1:5000/api/img?img=phase"+imgId}, 200
 
@@ -54,10 +56,16 @@ def select():
         print(height, width, x, y)
         return {'data': data}
 
-# @app.route('/api/construct', methods=['GET', 'POST'])
-# def construct():
-#     magId = str(request.args.get('magId'))
-#     phaseId = str(request.args.get('phaseId'))
-#     if request.method == 'GET':
 
-#         return {'data': data}
+@app.route('/api/construct', methods=['GET', 'POST'])
+def construct():
+    if request.method == 'GET':
+        if len(processing.db.magnitude) == 0 or len(processing.db.phase) == 0:
+            return {"Error": "No magnitude or phase found!"}, 404
+        magId = str(request.args.get('magId'))
+        phaseId = str(request.args.get('phaseId'))
+        mag = processing.db.magnitude['mag'+str(magId)]
+        phase = processing.db.phase['phase'+str(phaseId)]
+        processing.construct_image(mag, phase)
+
+        return {'result_url': 'http://127.0.0.1:5000/api/img?img=result'}

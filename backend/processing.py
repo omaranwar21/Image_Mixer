@@ -12,6 +12,11 @@ matplotlib.use('Agg')
 class counter:
     imgId = 0
 
+
+class db:
+    magnitude = {}
+    phase = {}
+
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: Images paths
 #   Packages used : CV2 package for reading an image : returns a numpy array of the image in shape (height, width, 3"BGR")
@@ -71,8 +76,9 @@ def resize_image(image_path):
 
 
 def plot_magnitude_phase(image_path):
-    id = image_path.split()
     mag, phase = fourier_2D(image_path)
+    db.magnitude['mag'+str(counter.imgId)] = mag
+    db.phase['phase'+str(counter.imgId)] = phase
     inverse_mag = np.fft.ifft2(mag)
     inverse_phase = np.fft.ifft2(phase)
     plt.imshow(np.abs(np.log(inverse_mag)), cmap="gray")
@@ -93,6 +99,6 @@ def construct_image(magnitude, phase):
 
     combined = np.multiply(magnitude, phase)
     image_combined = np.real(np.fft.ifft2(combined))
-
-    return image_combined
+    cv2.imwrite("./files/images/result.png", image_combined)
+    # return image_combined
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
