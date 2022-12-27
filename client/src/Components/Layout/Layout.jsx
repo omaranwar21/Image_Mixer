@@ -1,11 +1,22 @@
 import React from 'react'
-import CropImg from '../Crop/CropImg'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import CropFirstImg from '../Crop/CropFirstImg'
+import CropSecondImg from '../Crop/CropSecondImg'
 
 const Layout = () => {
   return (
-    <div>
-        <CropImg/>
-    </div>
+    <Container fluid>
+        <Row>
+            <Col>
+            <CropFirstImg/>
+            </Col>
+            <Col>
+            <CropSecondImg/>
+            </Col>
+        </Row>
+    </Container>
   )
 }
 
