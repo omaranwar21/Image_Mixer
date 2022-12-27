@@ -1,10 +1,12 @@
+import React from 'react'
+import Layout from './Components/Layout/Layout'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      Welcome to Task 4
-    </div>
-  );
+    <>
+    <Layout/>
+    </>
+  )
 }
 
-export default App;
+export default App
