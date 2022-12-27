@@ -1,52 +1,50 @@
-#---------------------------------------------------------------------- Packages used ----------------------------------------------------------------------#
-import numpy as np
-import cv2
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------#
+from flask import Flask, request, send_from_directory
+from flask_cors import CORS
+import os.path
 
-# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
-#   Arguments: Images paths
-#       Packages used : CV2 package for reading an image : returns a numpy array of the image in shape (height, width, 3"BGR")
-#       Functions called: magnitude_phase (user defined function returns the magnitude and phase respectively of an image passed)
-#   return: magnitudes, phases of the first and second images respectively. 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------#
-def fourier_2D(first_image_path, second_image_path):
-    
-    first_image = cv2.imread(first_image_path, 0)  #first image as gray scale (0) --> for gray scale
-    second_image = cv2.imread(second_image_path, 0) #second image as gray scale (0) --> for gray scale
+import processing
 
-    first_image = cv2.resize(first_image, dsize = [1400, 1400])  # Resizing for phase and magnitude extraction for the first image.
-    second_image = cv2.resize(second_image, dsize = [1400, 1400]) # Resizing for phase and magnitude extraction for the second image.
+IMG_FOLDER = '.\\files\images'
 
-    first_image_magnitude, first_image_phase = magnitude_phase(first_image) # calling user defined function to get magnitude and phase of the first image
-    second_image_magnitude, second_image_phase = magnitude_phase(second_image) # calling user defined function to get magnitude and phase of the first image
+app = Flask(__name__)
+app.config['IMG_FOLDER'] = IMG_FOLDER
+CORS(app)
 
-    return first_image_magnitude, first_image_phase, second_image_magnitude, second_image_phase
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
-# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
-#   Arguments: Image
-#       Packages used : numpy package for fourier transform : returns a numpy array of the image in shape (height, width, 3"BGR")
-#   return: magnitude and phase of the passed image respectively. 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------#
-def magnitude_phase(image):
+@app.route('/api/img', methods=['GET', 'POST'])
+def img():
+    # get the image
+    if request.method == 'GET':
+        id = request.args.get('img')
+        imgPath = str(id) + '.png'
+        print(imgPath)
+        return send_from_directory(directory=app.config['IMG_FOLDER'], path=imgPath)
 
-    image_fourier = np.fft.fft2(image) #2d Fourier transform for the images
-    magnitude = np.abs(image_fourier)  # Magnitudes of the fourier sesries
-    phase = np.exp(1j*np.angle(image_fourier)) # Phases of the fourier sesries
-    
-    return magnitude, phase
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------#
+    # the upload functionality
+    if request.method == 'POST':
+        if "Img" not in request.files:
+            return {"Error": 'File Not Found'}, 404
 
-# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
-#   Arguments: magnitude and phase of the needed constructed image
-#       Packages used : numpy package for multiplying the magnitude and phase : returns a numpy array of the image in shape
-#                       take the real part of the series inversed to get the image constructed.
-#   return: constructed image. 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------#
-def construct_image(magnitude, phase):
+        image = request.files["Img"]
+        imgId = str(processing.counter.imgId)
+        fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
+        image.save(fullPath)
+        processing.resize_image(fullPath)
+        return {"mag_img_url": "http://127.0.0.1:5000/api/img?img="+imgId, "imgId": imgId}, 200
 
-    combined = np.multiply(magnitude, phase)
-    image_combined = np.real(np.fft.ifft2(combined))
 
-    return image_combined
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------#
+@app.route('/api/combImg', methods=['GET'])
+def combImgs():
+    imgId = str(request.args.get('imgId'))
+    fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
+    processing.plot_magnitude_phase(fullPath)
+    processing.counter.imgId += 1
+    return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=mag"+imgId,
+            "phase_img_url": "http://127.0.0.1:5000/api/img?img=phase"+imgId}, 200
+
+
+@app.route('/api/select', methods=['GET', 'POST'])
+def select():
+    if request.method == 'POST':
+        data = request.get_json()
+        return {'data': data}
