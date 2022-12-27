@@ -14,14 +14,13 @@ class counter:
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: Images paths
-#       Packages used : CV2 package for reading an image : returns a numpy array of the image in shape (height, width, 3"BGR")
-#       Functions called: magnitude_phase (user defined function returns the magnitude and phase respectively of an image passed)
+#   Packages used : CV2 package for reading an image : returns a numpy array of the image in shape (height, width, 3"BGR")
+#   Functions called: magnitude_phase (user defined function returns the magnitude and phase respectively of an image passed)
 #   return: magnitudes, phases of the first and second images respectively.
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
 def fourier_2D(image_path):
-
     # first image as gray scale (0) --> for gray scale
     image = cv2.imread(image_path, 0)
     # Resizing for phase and magnitude extraction for the first image.
@@ -34,7 +33,7 @@ def fourier_2D(image_path):
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: Image
-#       Packages used : numpy package for fourier transform : returns a numpy array of the image in shape (height, width, 3"BGR")
+#   Packages used : numpy package for fourier transform : returns a numpy array of the image in shape (height, width, 3"BGR")
 #   return: magnitude and phase of the passed image respectively.
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
@@ -48,6 +47,28 @@ def magnitude_phase(image):
     return magnitude, phase
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
+# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
+#   Arguments: Images path
+#   Packages used : CV2 package for reading and writing the image : returns a numpy array of the image in shape (height, width, 3"BGR")
+#   Functions called: resize the image and save it in the same path
+#   return: void
+#------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+
+def resize_image(image_path):
+    image = cv2.imread(image_path)
+    image = cv2.resize(image, dsize=(1400, 1400))
+    cv2.imwrite(image_path, image)
+#------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
+#   Arguments: Images path
+#   Packages used : CV2 package for reading and writing the image : returns a numpy array of the image in shape (height, width, 3"BGR"),
+#                   matplot.plotly for rendering the image and save it in the given path
+#   Functions called: plot the magnitude & the phase and save it in the given path
+#   return: void
+#------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
 
 def plot_magnitude_phase(image_path):
     id = image_path.split()
@@ -55,10 +76,10 @@ def plot_magnitude_phase(image_path):
     inverse_mag = np.fft.ifft2(mag)
     inverse_phase = np.fft.ifft2(phase)
     plt.imshow(np.abs(np.log(inverse_mag)), cmap="gray")
-    plt.savefig('./files/magnitude/mag'+str(counter.imgId))
+    plt.savefig('./files/images/mag'+str(counter.imgId))
     plt.clf()
     plt.imshow(np.abs(np.log(inverse_phase)), cmap="gray")
-    plt.savefig('./files/phase/phase'+str(counter.imgId))
+    plt.savefig('./files/images/phase'+str(counter.imgId))
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: magnitude and phase of the needed constructed image
