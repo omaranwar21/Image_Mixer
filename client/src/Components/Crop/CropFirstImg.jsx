@@ -5,9 +5,6 @@ import { FileContext } from '../contexts/fileContext'
 import axios from '../../Global/API/axios'
 
 const CropFirstImg = () => {
-    const [originalURL, setOriginalURL] = useState()
-    const [phaseURL, setphaseURL] = useState()
-    const [magnitudeURL, setMagnitudeURL] = useState()
     const inputFile = useRef(null);
     const { 
         firstCrop,
@@ -15,7 +12,13 @@ const CropFirstImg = () => {
         firstFile,
         setFirstFile,
         selectOriginalFirst,
-        setSelectOriginalFirst
+        setSelectOriginalFirst,
+        magnitudeFirstURL,
+        setMagnitudeFirstURL,
+        phaseFirstURL,
+        setphaseFirstURL,
+        originalFirstURL,
+        setOriginalFirstURL
         } = useContext(FileContext);
 
     const handleFileFirstUpload = (e) => {
@@ -25,11 +28,11 @@ const CropFirstImg = () => {
         axios.post('/img',
             formData
         ).then((response) => {
-            setOriginalURL(response.data.img_url)
+            setOriginalFirstURL(response.data.img_url)
             axios.get(`/combImg?imgId=${response.data.imgId}`
             ).then((response) => {
-                setMagnitudeURL(response.data.mag_img_url)
-                setphaseURL(response.data.phase_img_url)
+                setMagnitudeFirstURL(response.data.mag_img_url)
+                setphaseFirstURL(response.data.phase_img_url)
                 console.log(response)
             }).catch((err) => {
                 console.log(err)
@@ -47,7 +50,7 @@ const CropFirstImg = () => {
     };
 
     const handleImgDelete = () => {
-        setOriginalURL(null)
+        setOriginalFirstURL(null)
         setFirstFile(undefined)
         inputFile.current.value = null
     }
@@ -88,10 +91,10 @@ const CropFirstImg = () => {
                                 console.log(err)
                             })
                         }}>
-                        <img style={{ width: originalURL !== null ? "20rem" : "0", height: originalURL !== null? "20rem" : "0" }} src={originalURL} />
+                        <img style={{ width: originalFirstURL !== null ? "20rem" : "0", height: originalFirstURL !== null? "20rem" : "0" }} src={originalFirstURL} />
                     </ReactCrop>
                 ) :
-                    <img style={{ width: firstFile !== undefined ? "20rem" : "0", height: firstFile !== undefined ? "20rem" : "0" }} src={originalURL} />
+                    <img style={{ width: firstFile !== undefined ? "20rem" : "0", height: firstFile !== undefined ? "20rem" : "0" }} src={originalFirstURL} />
                 }
 
             </div>

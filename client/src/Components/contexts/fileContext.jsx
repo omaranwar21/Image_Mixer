@@ -4,6 +4,12 @@ const FileContext = createContext();
 const FileContextProvider = ({ children }) => {
     const [selectOriginalFirst , setSelectOriginalFirst] = useState(false);
     const [selectOriginalSecond , setSelectOriginalSecond] = useState(false);
+    const [originalFirstURL, setOriginalFirstURL] = useState()
+    const [phaseFirstURL, setphaseFirstURL] = useState()
+    const [magnitudeFirstURL, setMagnitudeFirstURL] = useState()
+    const [originalSecondURL, setOriginalSecondURL] = useState()
+    const [phaseSecondURL, setphaseSecondURL] = useState()
+    const [magnitudeSecondURL, setMagnitudeSecondURL] = useState()
     const [firstCrop, setFirstCrop] = useState({
         unit: '%', // Can be 'px' or '%'
         x: 0,
@@ -35,7 +41,19 @@ const FileContextProvider = ({ children }) => {
             selectOriginalFirst,
             setSelectOriginalFirst,
             selectOriginalSecond,
-            setSelectOriginalSecond
+            setSelectOriginalSecond,
+            originalFirstURL,
+            setOriginalFirstURL,
+            phaseFirstURL,
+            setphaseFirstURL,
+            magnitudeFirstURL,
+            setMagnitudeFirstURL,
+            originalSecondURL,
+            setOriginalSecondURL,
+            phaseSecondURL,
+            setphaseSecondURL,
+            magnitudeSecondURL,
+            setMagnitudeSecondURL
             }}>
 			{children}
 		</FileContext.Provider>
