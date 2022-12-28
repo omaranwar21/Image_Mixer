@@ -63,8 +63,6 @@ const CropSecondImg = () => {
 
     return (
         <div>
-            <img src={magnitudeSecondURL} alt="" />
-            <img src={phaseSecondURL} alt="" />
             <button onClick={handleSelectClick}>
                 Crop image 2
             </button>
