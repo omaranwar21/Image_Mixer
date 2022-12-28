@@ -11,8 +11,8 @@ const CropFirstImg = () => {
         setFirstCrop,
         firstFile,
         setFirstFile,
-        selectOriginalFirst,
-        setSelectOriginalFirst,
+        checkMode,
+        setCheckMode,
         magnitudeFirstURL,
         setMagnitudeFirstURL,
         phaseFirstURL,
@@ -56,10 +56,10 @@ const CropFirstImg = () => {
     }
 
     const handleSelectClick = () => {
-        setSelectOriginalFirst(!selectOriginalFirst)
+        setCheckMode(!checkMode)
     }
 
-    console.log(selectOriginalFirst);
+    console.log(checkMode);
 
     return (
         <>
@@ -80,7 +80,7 @@ const CropFirstImg = () => {
                     style={{ display: 'none' }}
                     onChange={handleFileFirstUpload}
                 />
-                {selectOriginalFirst === true ? (
+                {checkMode === true ? (
                     <ReactCrop crop={firstCrop} onChange={(c, per) => setFirstCrop(per)}
                         onComplete={(px, percent) => {
                             axios.post('/select',
@@ -91,10 +91,10 @@ const CropFirstImg = () => {
                                 console.log(err)
                             })
                         }}>
-                        <img style={{ width: originalFirstURL !== null ? "20rem" : "0", height: originalFirstURL !== null? "20rem" : "0" }} src={originalFirstURL} />
+                        <img style={{ width: originalFirstURL !== null ? "17rem" : "0", height: originalFirstURL !== null? "16rem" : "0" }} src={originalFirstURL} />
                     </ReactCrop>
                 ) :
-                    <img style={{ width: firstFile !== undefined ? "20rem" : "0", height: firstFile !== undefined ? "20rem" : "0" }} src={originalFirstURL} />
+                    <img style={{ width: firstFile !== undefined ? "17rem" : "0", height: firstFile !== undefined ? "16rem" : "0" }} src={originalFirstURL} />
                 }
 
             </div>

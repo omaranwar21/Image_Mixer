@@ -2,14 +2,10 @@ import React, { createContext, useState } from 'react';
 const FileContext = createContext();
 
 const FileContextProvider = ({ children }) => {
-    const [selectOriginalFirst , setSelectOriginalFirst] = useState(false);
-    const [selectOriginalSecond , setSelectOriginalSecond] = useState(false);
+    // original first
+    const [firstFile,setFirstFile] = useState();
+    const [checkMode , setCheckMode] = useState(false);
     const [originalFirstURL, setOriginalFirstURL] = useState()
-    const [phaseFirstURL, setphaseFirstURL] = useState()
-    const [magnitudeFirstURL, setMagnitudeFirstURL] = useState()
-    const [originalSecondURL, setOriginalSecondURL] = useState()
-    const [phaseSecondURL, setphaseSecondURL] = useState()
-    const [magnitudeSecondURL, setMagnitudeSecondURL] = useState()
     const [firstCrop, setFirstCrop] = useState({
         unit: '%', // Can be 'px' or '%'
         x: 0,
@@ -17,7 +13,9 @@ const FileContextProvider = ({ children }) => {
         width: 0,
         height: 0
     })
-    const [firstFile,setFirstFile] = useState();
+    // original second
+    const [secondFile,setSecondFile] = useState();
+    const [originalSecondURL, setOriginalSecondURL] = useState()
     const [secondCrop, setSecondCrop] = useState({
         unit: '%', // Can be 'px' or '%'
         x: 0,
@@ -25,7 +23,14 @@ const FileContextProvider = ({ children }) => {
         width: 0,
         height: 0
     })
-    const [secondFile,setSecondFile] = useState();
+    // mag + phase first
+    const [magnitudeFirstURL, setMagnitudeFirstURL] = useState()
+    const [phaseFirstURL, setphaseFirstURL] = useState()
+    const [magFirstCrop, setMagFirstCrop] = useState()
+    const [phaseFirstCrop, setPhaseFirstCrop] = useState()
+    // mag + phase second
+    const [magnitudeSecondURL, setMagnitudeSecondURL] = useState()
+    const [phaseSecondURL, setphaseSecondURL] = useState()
 	
 	return (
 		<FileContext.Provider 
@@ -38,10 +43,6 @@ const FileContextProvider = ({ children }) => {
             setSecondCrop,
             secondFile,
             setSecondFile,
-            selectOriginalFirst,
-            setSelectOriginalFirst,
-            selectOriginalSecond,
-            setSelectOriginalSecond,
             originalFirstURL,
             setOriginalFirstURL,
             phaseFirstURL,
@@ -53,7 +54,13 @@ const FileContextProvider = ({ children }) => {
             phaseSecondURL,
             setphaseSecondURL,
             magnitudeSecondURL,
-            setMagnitudeSecondURL
+            setMagnitudeSecondURL,
+            checkMode,
+            setCheckMode,
+            magFirstCrop,
+            setMagFirstCrop,
+            phaseFirstCrop,
+            setPhaseFirstCrop
             }}>
 			{children}
 		</FileContext.Provider>
