@@ -7,12 +7,13 @@ import axios from '../../Global/API/axios'
 
 const CropSecondImg = () => {
     const inputFile = useRef(null);
-    const { secondCrop,
+    const {
+        secondCrop,
         setSecondCrop,
         secondFile,
         setSecondFile,
-        selectOriginalSecond,
-        setSelectOriginalSecond,
+        checkMode,
+        setCheckMode,
         originalSecondURL,
         setOriginalSecondURL,
         phaseSecondURL,
@@ -55,17 +56,8 @@ const CropSecondImg = () => {
         inputFile.current.value = null
     }
 
-    const handleSelectClick = () => {
-        setSelectOriginalSecond(!selectOriginalSecond)
-    }
-
-    console.log(selectOriginalSecond);
-
     return (
         <div>
-            <button onClick={handleSelectClick}>
-                Crop image 2
-            </button>
             <button onClick={handleButtonClick}>
                 Upload image 2
             </button>
@@ -79,7 +71,7 @@ const CropSecondImg = () => {
                 style={{ display: 'none' }}
                 onChange={onFileSecondUpload}
             />
-            {selectOriginalSecond === true ? (
+            {checkMode === true ? (
                 <ReactCrop crop={secondCrop} onChange={(px, per) => setSecondCrop(per)}
                     onComplete={(px, percent) => {
                         axios.post('/select',
@@ -91,10 +83,10 @@ const CropSecondImg = () => {
                         })
                     }}
                 >
-                    <img style={{ width: originalSecondURL !== null ? "20rem" : "0", height: originalSecondURL !== null ? "20rem" : "0"}} src={originalSecondURL} />
+                    <img style={{ width: originalSecondURL !== null ? "17rem" : "0", height: originalSecondURL !== null ? "16rem" : "0"}} src={originalSecondURL} />
                 </ReactCrop>
             ) :
-                <img style={{ width: secondFile !== undefined ? "20rem" : "0", height: secondFile !== undefined ? "20rem" : "0" }} src={originalSecondURL} />
+                <img style={{ width: secondFile !== undefined ? "17rem" : "0", height: secondFile !== undefined ? "16rem" : "0" }} src={originalSecondURL} />
             }
 
         </div>
