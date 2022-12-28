@@ -15,7 +15,7 @@ class counter:
 
 class db:
     magnitude = {}
-    phase = {}
+    angle = {}
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: Images paths
@@ -31,9 +31,9 @@ def fourier_2D(image_path):
     # Resizing for phase and magnitude extraction for the first image.
     image = cv2.resize(image, dsize=(1400, 1400))
     # calling user defined function to get magnitude and phase of the first image
-    image_magnitude, image_phase = magnitude_phase(image)
+    image_magnitude, image_angle = magnitude_angle(image)
 
-    return image_magnitude, image_phase
+    return image_magnitude, image_angle
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
@@ -43,13 +43,14 @@ def fourier_2D(image_path):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def magnitude_phase(image):
+def magnitude_angle(image):
 
     image_fourier = np.fft.fft2(image)  # 2d Fourier transform for the images
+    image_fourier = np.fft.fftshift(image_fourier)
     magnitude = np.abs(image_fourier)  # Magnitudes of the fourier sesries
-    phase = np.exp(1j*np.angle(image_fourier))  # Phases of the fourier sesries
+    angle = np.angle(image_fourier)  # Phases of the fourier sesries
 
-    return magnitude, phase
+    return magnitude, angle
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
@@ -76,9 +77,10 @@ def resize_image(image_path):
 
 
 def plot_magnitude_phase(image_path):
-    mag, phase = fourier_2D(image_path)
+    mag, angle = fourier_2D(image_path)
+    phase = np.exp(1j*angle)
     db.magnitude['mag'+str(counter.imgId)] = mag
-    db.phase['phase'+str(counter.imgId)] = phase
+    db.angle['phase'+str(counter.imgId)] = angle
     inverse_mag = np.fft.ifft2(mag)
     inverse_phase = np.fft.ifft2(phase)
     plt.imshow(np.abs(np.log(inverse_mag)), cmap="gray")
@@ -95,13 +97,26 @@ def plot_magnitude_phase(image_path):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def construct_image(magnitude, phase):
+def construct_image(magnitude, angle, id):
 
-    combined = np.multiply(magnitude, phase)
+    combined = np.multiply(magnitude, angle)
+    combined = np.fft.ifftshift(combined)
     image_combined = np.real(np.fft.ifft2(combined))
-    cv2.imwrite("./files/images/result.png", image_combined)
-    # return image_combined
+    if id:
+        cv2.imwrite("./files/images/result.png", image_combined)
+    return image_combined
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+
+def crop_2d_img(image, x_percentage, y_percentage, width, height):
+    coordinates = points(x_percentage, y_percentage, width, height)
+    max_height = image.shape[0]-1
+    cutted_img = np.zeros_like(image)
+
+    for x in range(int(coordinates[0]), int(coordinates[1])):
+        for y in range(int(coordinates[2]), int(coordinates[3])):
+            cutted_img[max_height-y, x] = image[max_height-y, x]
+    return cutted_img
 
 
 def points(x_percentage, y_percentage, width, height):
@@ -118,18 +133,3 @@ def points(x_percentage, y_percentage, width, height):
     coordinates.append(y_maximum)
 
     return coordinates
-
-
-def crop_2d_img(img_id, coordinates):
-    image_path = './files/images/' + str(img_id) + '.png'
-    print(image_path, img_id, coordinates)
-    image = cv2.imread(image_path, 0)
-    max_height = image.shape[0]-1
-    cutted_img = np.zeros_like(image)
-
-    for x in range(int(coordinates[0]), int(coordinates[1])):
-        for y in range(int(coordinates[2]), int(coordinates[3])):
-            cutted_img[max_height-y, x] = image[max_height-y, x]
-
-    cv2.imwrite("./files/cut.png", cutted_img)
-    # return cutted_img
