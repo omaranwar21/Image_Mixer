@@ -29,8 +29,6 @@ const CropSecondMagPhase = () => {
     setMo(false)
   }
 
-  console.log(mo);
-
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
@@ -39,7 +37,7 @@ const CropSecondMagPhase = () => {
         </button> */}
         <div>
           {checkMode === true ? (
-            <button onClick={handleClick2} style={{backgroundColor:"transparent",border: mo === false ? "red" :"transparent"}}>
+            <button onClick={handleClick2} style={{backgroundColor:"transparent",borderColor: mo === false ? "red" : "transparent"}}>
               <ReactCrop crop={magSecondCrop} onChange={(c, per) => setMagSecondCrop(per)}
                 onComplete={(px, percent) => {
                   axios.post('/select',
@@ -54,14 +52,14 @@ const CropSecondMagPhase = () => {
               </ReactCrop>
             </button>
           ) :
-            <button onClick={handleClick2} style={{backgroundColor:"transparent",border: mo === false ? "red" :"transparent"}}>
+            <button onClick={handleClick2} style={{backgroundColor:"transparent",borderColor: mo === false ? "red" : "transparent"}}>
               <img style={{ width: secondFile !== undefined ? "20rem" : "0", height: secondFile !== undefined ? "10rem" : "0" }} src={magnitudeSecondURL} />
             </button>
           }
         </div>
         <div>
           {checkMode === true ? (
-            <button onClick={handleClick1} style={{backgroundColor:"transparent",border: mo === true ? "red" :"transparent"}}>
+            <button onClick={handleClick1} style={{backgroundColor:"transparent",borderColor: mo === true ? "red" : "transparent"}}>
               <ReactCrop crop={phaseSecondCrop} onChange={(c, per) => setPhaseSecondCrop(per)}
                 onComplete={(px, percent) => {
                   axios.post('/select',
@@ -76,7 +74,7 @@ const CropSecondMagPhase = () => {
               </ReactCrop>
             </button>
           ) :
-            <button onClick={handleClick1} style={{backgroundColor:"transparent",border: mo === true ? "red" :"transparent"}}>
+            <button onClick={handleClick1} style={{backgroundColor:"transparent",borderColor: mo === true ? "red" : "transparent"}}>
               <img style={{ width: secondFile !== undefined ? "20rem" : "0", height: secondFile !== undefined ? "10rem" : "0" }} src={phaseSecondURL} />
             </button>
           }
