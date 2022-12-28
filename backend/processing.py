@@ -119,12 +119,17 @@ def points(x_percentage, y_percentage, width, height):
 
     return coordinates
 
-def crop_2d_img(image,coordinates):
-    
-    max_height= image.shape[0]-1
+
+def crop_2d_img(img_id, coordinates):
+    image_path = './files/images/' + str(img_id) + '.png'
+    print(image_path, img_id, coordinates)
+    image = cv2.imread(image_path, 0)
+    max_height = image.shape[0]-1
     cutted_img = np.zeros_like(image)
 
-    for x in range(int(coordinates[0]),int(coordinates[1])):
-        for y in range(int(coordinates[2]),int(coordinates[3])):
-            cutted_img[max_height-y,x] = image[max_height-y,x]
-    return cutted_img
+    for x in range(int(coordinates[0]), int(coordinates[1])):
+        for y in range(int(coordinates[2]), int(coordinates[3])):
+            cutted_img[max_height-y, x] = image[max_height-y, x]
+
+    cv2.imwrite("./files/cut.png", cutted_img)
+    # return cutted_img
