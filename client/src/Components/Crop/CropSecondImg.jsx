@@ -7,7 +7,8 @@ import axios from '../../Global/API/axios'
 
 const CropSecondImg = () => {
     const inputFile = useRef(null);
-    const { secondCrop,
+    const {
+        secondCrop,
         setSecondCrop,
         secondFile,
         setSecondFile,

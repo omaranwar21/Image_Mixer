@@ -28,9 +28,12 @@ const FileContextProvider = ({ children }) => {
     const [phaseFirstURL, setphaseFirstURL] = useState()
     const [magFirstCrop, setMagFirstCrop] = useState()
     const [phaseFirstCrop, setPhaseFirstCrop] = useState()
+    const [mo, setMo] = useState(true)
     // mag + phase second
     const [magnitudeSecondURL, setMagnitudeSecondURL] = useState()
     const [phaseSecondURL, setphaseSecondURL] = useState()
+    const [magSecondCrop, setMagSecondCrop] = useState()
+    const [phaseSecondCrop, setPhaseSecondCrop] = useState()
 	
 	return (
 		<FileContext.Provider 
@@ -60,7 +63,13 @@ const FileContextProvider = ({ children }) => {
             magFirstCrop,
             setMagFirstCrop,
             phaseFirstCrop,
-            setPhaseFirstCrop
+            setPhaseFirstCrop,
+            magSecondCrop,
+            setMagSecondCrop,
+            phaseSecondCrop,
+            setPhaseSecondCrop,
+            mo,
+            setMo
             }}>
 			{children}
 		</FileContext.Provider>
