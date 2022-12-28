@@ -36,7 +36,7 @@ const CropSecondMagPhase = () => {
           crop image 1
         </button> */}
         <div>
-          {checkMode === true ? (
+          {checkMode !== true && mo === false ? (
             <button onClick={handleClick2} style={{backgroundColor:"transparent",borderColor: mo === false ? "red" : "transparent"}}>
               <ReactCrop crop={magSecondCrop} onChange={(c, per) => setMagSecondCrop(per)}
                 onComplete={(px, percent) => {
@@ -58,7 +58,7 @@ const CropSecondMagPhase = () => {
           }
         </div>
         <div>
-          {checkMode === true ? (
+          {checkMode !== true && mo === true  ? (
             <button onClick={handleClick1} style={{backgroundColor:"transparent",borderColor: mo === true ? "red" : "transparent"}}>
               <ReactCrop crop={phaseSecondCrop} onChange={(c, per) => setPhaseSecondCrop(per)}
                 onComplete={(px, percent) => {
