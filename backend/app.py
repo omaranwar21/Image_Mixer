@@ -49,11 +49,12 @@ def combImgs():
 def select():
     if request.method == 'POST':
         data = request.get_json()
-        height = data['height']
-        width = data['width']
-        x = data['x']
-        y = data['y']
-        print(height, width, x, y)
+        coordinates = []
+        coordinates.append(data['x'])
+        coordinates.append(data['y'])
+        coordinates.append(data['width'])
+        coordinates.append(data['height'])
+        processing.crop_2d_img(data['fimgId'], coordinates)
         return {'data': data}
 
 
