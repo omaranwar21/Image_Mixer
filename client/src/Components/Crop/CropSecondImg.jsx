@@ -19,7 +19,15 @@ const CropSecondImg = () => {
         phaseSecondURL,
         setphaseSecondURL,
         magnitudeSecondURL,
-        setMagnitudeSecondURL
+        setMagnitudeSecondURL,
+        setOriginalSecondImgId,
+        originalFirstImgId,
+        firstCrop,
+        originalSecondImgId,
+        magFirstCrop,
+        phaseFirstCrop,
+        magSecondCrop,
+        phaseSecondCrop,
     } = useContext(FileContext);
 
     const onFileSecondUpload = (e) => {
@@ -34,6 +42,7 @@ const CropSecondImg = () => {
             ).then((response) => {
                 setMagnitudeSecondURL(response.data.mag_img_url)
                 setphaseSecondURL(response.data.phase_img_url)
+                setOriginalSecondImgId(response.data.imgId)
                 console.log(response)
             }).catch((err) => {
                 console.log(err)
@@ -75,7 +84,20 @@ const CropSecondImg = () => {
                 <ReactCrop crop={secondCrop} onChange={(px, per) => setSecondCrop(per)}
                     onComplete={(px, percent) => {
                         axios.post('/select',
-                            percent
+                        {
+                            "original_First_Id" : originalFirstImgId,
+                            "original_First_Crop" : firstCrop,
+                            "original_Second_Id" : originalSecondImgId,
+                            "original_Second_Crop" : secondCrop,
+                            "mag_First_Id" : `mag${originalFirstImgId}`,
+                            "mag_First_Crop" : magFirstCrop,
+                            "phase_First_Id" : `phase${originalFirstImgId}`,
+                            "phase_First_Crop" : phaseFirstCrop,
+                            "mag_Second_Id" : `mag${originalSecondImgId}`,
+                            "mag_Second_Crop" : magSecondCrop,
+                            "phase_Second_Id" : `phase${originalSecondImgId}`,
+                            "phase_Second_Crop" : phaseSecondCrop,
+                        }
                         ).then((response) => {
                             console.log(response)
                         }).catch((err) => {
@@ -83,10 +105,10 @@ const CropSecondImg = () => {
                         })
                     }}
                 >
-                    <img style={{ width: originalSecondURL !== null ? "17rem" : "0", height: originalSecondURL !== null ? "16rem" : "0"}} src={originalSecondURL} />
+                    <img style={{ width: originalSecondURL !== null ? "17rem" : "0", height: originalSecondURL !== null ? "17rem" : "0"}} src={originalSecondURL} />
                 </ReactCrop>
             ) :
-                <img style={{ width: secondFile !== undefined ? "17rem" : "0", height: secondFile !== undefined ? "16rem" : "0" }} src={originalSecondURL} />
+                <img style={{ width: secondFile !== undefined ? "17rem" : "0", height: secondFile !== undefined ? "17rem" : "0" }} src={originalSecondURL} />
             }
 
         </div>

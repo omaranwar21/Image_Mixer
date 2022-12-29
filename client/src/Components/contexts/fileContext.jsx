@@ -4,8 +4,8 @@ const FileContext = createContext();
 const FileContextProvider = ({ children }) => {
     // original first
     const [firstFile,setFirstFile] = useState();
-    const [checkMode , setCheckMode] = useState(false);
     const [originalFirstURL, setOriginalFirstURL] = useState()
+    const [originalFirstImgId, setOriginalFirstImgId] = useState()
     const [firstCrop, setFirstCrop] = useState({
         unit: '%', // Can be 'px' or '%'
         x: 0,
@@ -16,6 +16,7 @@ const FileContextProvider = ({ children }) => {
     // original second
     const [secondFile,setSecondFile] = useState();
     const [originalSecondURL, setOriginalSecondURL] = useState()
+    const [originalSecondImgId, setOriginalSecondImgId] = useState()
     const [secondCrop, setSecondCrop] = useState({
         unit: '%', // Can be 'px' or '%'
         x: 0,
@@ -28,12 +29,14 @@ const FileContextProvider = ({ children }) => {
     const [phaseFirstURL, setphaseFirstURL] = useState()
     const [magFirstCrop, setMagFirstCrop] = useState()
     const [phaseFirstCrop, setPhaseFirstCrop] = useState()
-    const [mo, setMo] = useState(true)
     // mag + phase second
     const [magnitudeSecondURL, setMagnitudeSecondURL] = useState()
     const [phaseSecondURL, setphaseSecondURL] = useState()
     const [magSecondCrop, setMagSecondCrop] = useState()
     const [phaseSecondCrop, setPhaseSecondCrop] = useState()
+    // global 
+    const [mo, setMo] = useState(true)
+    const [checkMode , setCheckMode] = useState(false);
 	
 	return (
 		<FileContext.Provider 
@@ -69,7 +72,11 @@ const FileContextProvider = ({ children }) => {
             phaseSecondCrop,
             setPhaseSecondCrop,
             mo,
-            setMo
+            setMo,
+            originalFirstImgId,
+            setOriginalFirstImgId,
+            originalSecondImgId,
+            setOriginalSecondImgId
             }}>
 			{children}
 		</FileContext.Provider>
