@@ -18,7 +18,13 @@ const CropFirstMagPhase = () => {
     firstFile,
     originalFirstURL,
     mo,
-    setMo
+    setMo,
+    originalFirstImgId,
+    firstCrop,
+    originalSecondImgId,
+    secondCrop,
+    magSecondCrop,
+    phaseSecondCrop,
   } = useContext(FileContext);
 
   const handleClick1 = () => {
@@ -43,19 +49,32 @@ const CropFirstMagPhase = () => {
               <ReactCrop crop={magFirstCrop} onChange={(c, per) => setMagFirstCrop(per)}
                 onComplete={(px, percent) => {
                   axios.post('/select',
-                    percent
+                  {
+                    "original_First_Id" : originalFirstImgId,
+                    "original_First_Crop" : firstCrop,
+                    "original_Second_Id" : originalSecondImgId,
+                    "original_Second_Crop" : secondCrop,
+                    "mag_First_Id" : `mag${originalFirstImgId}`,
+                    "mag_First_Crop" : magFirstCrop,
+                    "phase_First_Id" : `phase${originalFirstImgId}`,
+                    "phase_First_Crop" : phaseFirstCrop,
+                    "mag_Second_Id" : `mag${originalSecondImgId}`,
+                    "mag_Second_Crop" : magSecondCrop,
+                    "phase_Second_Id" : `phase${originalSecondImgId}`,
+                    "phase_Second_Crop" : phaseSecondCrop,
+                }
                   ).then((response) => {
                     console.log(response)
                   }).catch((err) => {
                     console.log(err)
                   })
                 }}>
-                <img style={{ width: originalFirstURL !== null ? "20rem" : "0", height: originalFirstURL !== null ? "10rem" : "0" }} src={magnitudeFirstURL} />
+                <img style={{ width: originalFirstURL !== null ? "8rem" : "0", height: originalFirstURL !== null ? "8rem" : "0" }} src={magnitudeFirstURL} />
               </ReactCrop>
             </button>
           ) :
             <button onClick={handleClick1} style={{backgroundColor:"transparent",borderColor: mo === true ? "red" : "transparent"}}>
-              <img style={{ width: firstFile !== undefined ? "20rem" : "0", height: firstFile !== undefined ? "10rem" : "0" }} src={magnitudeFirstURL} />
+              <img style={{ width: firstFile !== undefined ? "8rem" : "0", height: firstFile !== undefined ? "8rem" : "0" }} src={magnitudeFirstURL} />
             </button>
           }
         </div>
@@ -65,19 +84,32 @@ const CropFirstMagPhase = () => {
               <ReactCrop crop={phaseFirstCrop} onChange={(c, per) => setPhaseFirstCrop(per)}
                 onComplete={(px, percent) => {
                   axios.post('/select',
-                    percent
+                  {
+                    "original_First_Id" : originalFirstImgId,
+                    "original_First_Crop" : firstCrop,
+                    "original_Second_Id" : originalSecondImgId,
+                    "original_Second_Crop" : secondCrop,
+                    "mag_First_Id" : `mag${originalFirstImgId}`,
+                    "mag_First_Crop" : magFirstCrop,
+                    "phase_First_Id" : `phase${originalFirstImgId}`,
+                    "phase_First_Crop" : phaseFirstCrop,
+                    "mag_Second_Id" : `mag${originalSecondImgId}`,
+                    "mag_Second_Crop" : magSecondCrop,
+                    "phase_Second_Id" : `phase${originalSecondImgId}`,
+                    "phase_Second_Crop" : phaseSecondCrop,
+                }
                   ).then((response) => {
                     console.log(response)
                   }).catch((err) => {
                     console.log(err)
                   })
                 }}>
-                <img style={{ width: originalFirstURL !== null ? "20rem" : "0", height: originalFirstURL !== null ? "10rem" : "0" }} src={phaseFirstURL} />
+                <img style={{ width: originalFirstURL !== null ? "8rem" : "0", height: originalFirstURL !== null ? "8rem" : "0" }} src={phaseFirstURL} />
               </ReactCrop>
             </button>
           ) :
             <button onClick={handleClick2}  style={{backgroundColor:"transparent",borderColor: mo === false ? "red" : "transparent"}}>
-              <img style={{ width: firstFile !== undefined ? "20rem" : "0", height: firstFile !== undefined ? "10rem" : "0" }} src={phaseFirstURL} />
+              <img style={{ width: firstFile !== undefined ? "8rem" : "0", height: firstFile !== undefined ? "8rem" : "0" }} src={phaseFirstURL} />
             </button>
           }
         </div>
