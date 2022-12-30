@@ -73,7 +73,7 @@ def plot_magnitude_phase(mag, angle):
     plt.clf()
     plt.axis('off')
     plt.imshow(np.abs(np.log(inverse_phase)), cmap="gray")
-    plt.savefig('./files/images/phase'+str(counter.imgId), bbox_inches='tight')
+    plt.savefig('./files/images/phase'+str(counter.imgId), bbox_inches='tight',pad_inches = 0)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
