@@ -3,7 +3,7 @@ from flask_cors import CORS
 import os.path
 
 
-from processing import *
+import processing 
 from image import *
 from fft_image import *
 
@@ -28,7 +28,7 @@ def img():
             return {"Error": 'File Not Found'}, 404
 
         imageFile = request.files["Img"]
-        imgId = str(counter.imgId)
+        imgId = str(processing.counter.imgId)
         fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
         imageFile.save(fullPath)
 
@@ -45,7 +45,7 @@ def combImgs():
     fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
     fft_image = FFT_Image(counter.imgId, fullPath, flag=0)
     fft_image.fourier_2D()
-    db.fft_images[imgId] = fft_image
+    processing.db.fft_images[imgId] = fft_image
 
     counter.imgId += 1
     return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=mag"+imgId,
@@ -56,11 +56,31 @@ def combImgs():
 def select():
     if request.method == 'POST':
         data = request.get_json()
-        print(db.fft_images)
+        f_image = processing.db.fft_images[str(data['fid'])]  # first image
+        s_image = processing.db.fft_images[str(data['sid'])]  # second image
+
+        if data['mode']:  # crop magnitude or phase
+            if data['flag']:  # 1st mag, 2nd phase
+                processing.construct_image(f_image.magnitude, s_image.angle,
+                                cropMag=data['magFirstCrop'], cropPhase=data['phaseSecondCrop'])
+            else:  # 1st phase, 2nd mag
+                processing.construct_image(s_image.magnitude, f_image.angle,
+                                cropMag=data['magSecondCrop'], cropPhase=data['phaseFirstCrop'])
+        else:  # crop from the orginal image
+            fcroped_image = f_image.crop_2d(data['firstCrop'])
+            f_mag, f_angle = processing.magnitude_angle(fcroped_image)
+
+            scroped_image = s_image.crop_2d(data['secondCrop'])
+            s_mag, s_angle = processing.magnitude_angle(scroped_image)
+            
+            if data['flag']:  # 1st mag, 2nd phase
+                processing.construct_image(f_mag, s_angle, 0)
+            else:  # 1st phase, 2nd mag
+                processing.construct_image(s_mag, f_angle, 0)
 
         # processing.crop_2d_img(
         #     0, [0,1, 0, 0, 1], data['x'], data['y'], data['width'], data['height'])
-        return {'data': data}
+        return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=result"}
 
 
 @app.route('/api/construct', methods=['GET', 'POST'])

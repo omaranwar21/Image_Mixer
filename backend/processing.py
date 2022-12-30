@@ -46,7 +46,7 @@ def magnitude_angle(image):
     magnitude = np.abs(image_fourier)  # Magnitudes of the fourier sesries
     angle = np.angle(image_fourier)  # Phases of the fourier sesries
 
-    plot_magnitude_phase(magnitude, angle)
+    # plot_magnitude_phase(magnitude, angle)
 
     return magnitude, angle
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
@@ -103,26 +103,33 @@ def resize_image(image_path, flag=1):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def construct_image(magnitude, angle, id):
+def construct_image(magnitude, angle,mode =1,**kwargs):
+    # flag = 0
+    if mode:
+        cropMag = kwargs['cropMag']
+        cropPhase = kwargs['cropPhase']
+        magnitude = crop_2d_img(magnitude,cropMag)
+        angle = crop_2d_img(angle,cropPhase)
+        # if(cropPhase['height'] != 0 and cropPhase['width'] != 0):
+        #     flag = 1
 
-    combined = np.multiply(magnitude, angle)
+
+    combined = np.multiply(magnitude, np.exp(np.multiply(1j,angle)))
     combined = np.fft.ifftshift(combined)
-    image_combined = np.real(np.fft.ifft2(combined))
-    if id:
-        cv2.imwrite("./files/images/result.png", image_combined)
+    image_combined = np.abs(np.fft.ifft2(combined))
+    # if flag:
+    image_combined = cv2.equalizeHist(image_combined.astype(np.uint8))
+
+    cv2.imwrite('../backend/files/images/result.png', image_combined)
     return image_combined
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def crop_2d_img(image_id, typeArr, x_percentage, y_percentage, width, height):
+def crop_2d_img(image,data):
+    if(data['height'] == 0 and data['width'] == 0):
+        return image
 
-    if typeArr[0]:  # orginal
-        image = cv2.imread('./files/images/'+str(image_id)+'.png')
-    elif typeArr[1]:  # magnitude
-        image = db.magnitude['mag'+str(image_id)]
-    elif typeArr[2]:  # phase
-        image = db.angle['angle'+str(image_id)]
-    coordinates = points(x_percentage, y_percentage, width, height)
+    coordinates = points(data['x'], data['y'], data['width'], data['height'])
     cutted_img = np.zeros_like(image)
 
     for x in range(int(coordinates[0]), int(coordinates[1])):
