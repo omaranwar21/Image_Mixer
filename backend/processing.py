@@ -14,8 +14,7 @@ class counter:
 
 
 class db:
-    magnitude = {}
-    angle = {}
+    fft_images = {}
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: Images paths

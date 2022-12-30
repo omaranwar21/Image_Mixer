@@ -3,8 +3,9 @@ from flask_cors import CORS
 import os.path
 
 
-import processing
+from processing import *
 from image import *
+from fft_image import *
 
 IMG_FOLDER = '.\\files\images'
 
@@ -27,13 +28,12 @@ def img():
             return {"Error": 'File Not Found'}, 404
 
         imageFile = request.files["Img"]
-        imgId = str(processing.counter.imgId)
+        imgId = str(counter.imgId)
         fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
         imageFile.save(fullPath)
 
-        image = image(fullPath)
-        image.resize()
-        cv2.imwrite(fullPath,image.image)
+        image = Image(imgId, fullPath)
+        cv2.imwrite(fullPath, image.image)
 
         # processing.resize_image(fullPath)
         return {"img_url": "http://127.0.0.1:5000/api/img?img="+imgId, "imgId": imgId}, 200
@@ -43,8 +43,11 @@ def img():
 def combImgs():
     imgId = str(request.args.get('imgId'))
     fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
-    processing.fourier_2D(fullPath)
-    processing.counter.imgId += 1
+    fft_image = FFT_Image(counter.imgId, fullPath, flag=0)
+    fft_image.fourier_2D()
+    db.fft_images[imgId] = fft_image
+
+    counter.imgId += 1
     return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=mag"+imgId,
             "phase_img_url": "http://127.0.0.1:5000/api/img?img=phase"+imgId}, 200
 
@@ -53,21 +56,22 @@ def combImgs():
 def select():
     if request.method == 'POST':
         data = request.get_json()
+        print(db.fft_images)
 
-        processing.crop_2d_img(
-            0, [0,1, 0, 0, 1], data['x'], data['y'], data['width'], data['height'])
+        # processing.crop_2d_img(
+        #     0, [0,1, 0, 0, 1], data['x'], data['y'], data['width'], data['height'])
         return {'data': data}
 
 
 @app.route('/api/construct', methods=['GET', 'POST'])
 def construct():
-    if request.method == 'GET':
-        if len(processing.db.magnitude) == 0 or len(processing.db.phase) == 0:
-            return {"Error": "No magnitude or phase found!"}, 404
-        magId = str(request.args.get('magId'))
-        phaseId = str(request.args.get('phaseId'))
-        mag = processing.db.magnitude['mag'+str(magId)]
-        phase = processing.db.phase['phase'+str(phaseId)]
-        processing.construct_image(mag, phase)
+    # if request.method == 'GET':
+    #     if len(processing.db.magnitude) == 0 or len(processing.db.angle) == 0:
+    #         return {"Error": "No magnitude or phase found!"}, 404
+    #     magId = str(request.args.get('magId'))
+    #     phaseId = str(request.args.get('phaseId'))
+    #     mag = processing.db.magnitude['mag'+str(magId)]
+    #     phase = processing.db.angle['angle'+str(phaseId)]
+    #     processing.construct_image(mag, phase,1)
 
-        return {'result_url': 'http://127.0.0.1:5000/api/img?img=result'}
+    return {'result_url': 'http://127.0.0.1:5000/api/img?img=result'}

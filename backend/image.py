@@ -1,17 +1,15 @@
 import numpy as np
 import cv2
 
-class image:
+
+class Image:
     # constructor funtion
-    def __init__(self,image_path,flag = 1):
-        self.image = cv2.imread(image_path,flag)
-
-
-    def resize(self):
+    def __init__(self, id, image_path, flag=1):
+        self.image = cv2.imread(image_path, flag)
         self.image = cv2.resize(self.image, dsize=(1400, 1400))
+        self.id = id
 
-
-    def crop_2d (self, x_percentage, y_percentage, width, height):
+    def crop_2d(self, x_percentage, y_percentage, width, height):
         coordinates = self.points(x_percentage, y_percentage, width, height)
         max_height = self.image.shape[0]-1
         cutted_img = np.zeros_like(self.image)
@@ -20,7 +18,6 @@ class image:
             for y in range(int(coordinates[2]), int(coordinates[3])):
                 cutted_img[max_height-y, x] = self.image[max_height-y, x]
         return cutted_img
-
 
     def points(x_percentage, y_percentage, width, height):
         coordinates = []
