@@ -52,24 +52,6 @@ def magnitude_angle(image):
     return magnitude, angle
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
-# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
-#   Arguments: Images path
-#   Packages used : CV2 package for reading and writing the image : returns a numpy array of the image in shape (height, width, 3"BGR")
-#   Functions called: resize the image and save it in the same path
-#   return: void
-#------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-def resize_image(image_path, flag = 1):
-    if flag:
-        image = cv2.imread(image_path)
-    else:
-        image = cv2.imread(image_path, flag)
-    image = cv2.resize(image, dsize=(1400, 1400))
-    cv2.imwrite(image_path, image)
-
-    return image
-#------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: Images path
@@ -83,16 +65,36 @@ def resize_image(image_path, flag = 1):
 def plot_magnitude_phase(mag, angle):
     phase = np.exp(1j*angle)
     db.magnitude['mag'+str(counter.imgId)] = mag
-    db.angle['phase'+str(counter.imgId)] = angle
+    db.angle['angle'+str(counter.imgId)] = angle
     inverse_mag = np.fft.ifft2(mag)
     inverse_phase = np.fft.ifft2(phase)
     plt.axis('off')
     plt.imshow(np.abs(np.log(inverse_mag)), cmap="gray")
-    plt.savefig('./files/images/mag'+str(counter.imgId), bbox_inches= 'tight')
+    plt.savefig('./files/images/mag'+str(counter.imgId), bbox_inches='tight')
     plt.clf()
     plt.axis('off')
     plt.imshow(np.abs(np.log(inverse_phase)), cmap="gray")
-    plt.savefig('./files/images/phase'+str(counter.imgId), bbox_inches= 'tight')
+    plt.savefig('./files/images/phase'+str(counter.imgId), bbox_inches='tight')
+#------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
+#   Arguments: Images path
+#   Packages used : CV2 package for reading and writing the image : returns a numpy array of the image in shape (height, width, 3"BGR")
+#   Functions called: resize the image and save it in the same path
+#   return: void
+#------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+
+def resize_image(image_path, flag=1):
+    if flag:
+        image = cv2.imread(image_path)
+    else:
+        image = cv2.imread(image_path, flag)
+    image = cv2.resize(image, dsize=(1400, 1400))
+    cv2.imwrite(image_path, image)
+
+    return image
+#------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: magnitude and phase of the needed constructed image
@@ -113,14 +115,22 @@ def construct_image(magnitude, angle, id):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def crop_2d_img(image, x_percentage, y_percentage, width, height):
+def crop_2d_img(image_id, typeArr, x_percentage, y_percentage, width, height):
+
+    if typeArr[0]:  # orginal
+        image = cv2.imread('./files/images/'+str(image_id)+'.png')
+    elif typeArr[1]:  # magnitude
+        image = db.magnitude['mag'+str(image_id)]
+    elif typeArr[2]:  # phase
+        image = db.angle['angle'+str(image_id)]
     coordinates = points(x_percentage, y_percentage, width, height)
-    max_height = image.shape[0]-1
     cutted_img = np.zeros_like(image)
 
     for x in range(int(coordinates[0]), int(coordinates[1])):
         for y in range(int(coordinates[2]), int(coordinates[3])):
-            cutted_img[max_height-y, x] = image[max_height-y, x]
+            cutted_img[y, x] = image[y, x]
+
+    cv2.imwrite('./files/cut.png', cutted_img)
     return cutted_img
 
 

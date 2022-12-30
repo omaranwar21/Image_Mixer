@@ -17,7 +17,6 @@ def img():
     if request.method == 'GET':
         id = request.args.get('img')
         imgPath = str(id) + '.png'
-        print(imgPath)
         return send_from_directory(directory=app.config['IMG_FOLDER'], path=imgPath)
 
     # the upload functionality
@@ -37,10 +36,8 @@ def img():
 def combImgs():
     imgId = str(request.args.get('imgId'))
     fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
-    processing.plot_magnitude_phase(fullPath)
+    processing.fourier_2D(fullPath)
     processing.counter.imgId += 1
-    print(processing.db.magnitude)
-    print(processing.db.phase)
     return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=mag"+imgId,
             "phase_img_url": "http://127.0.0.1:5000/api/img?img=phase"+imgId}, 200
 
@@ -49,12 +46,9 @@ def combImgs():
 def select():
     if request.method == 'POST':
         data = request.get_json()
-        coordinates = []
-        coordinates.append(data['x'])
-        coordinates.append(data['y'])
-        coordinates.append(data['width'])
-        coordinates.append(data['height'])
-        processing.crop_2d_img(data['fimgId'], coordinates)
+
+        processing.crop_2d_img(
+            0, [0,1, 0, 0, 1], data['x'], data['y'], data['width'], data['height'])
         return {'data': data}
 
 
