@@ -7,10 +7,12 @@ import './CropFirstImg.css'
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { FaCrop } from 'react-icons/fa';
 import { BsFillCloudUploadFill } from 'react-icons/bs';
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+
 
 const CropFirstImg = () => {
     const inputFile = useRef(null);
-    const { 
+    const {
         firstCrop,
         setFirstCrop,
         firstFile,
@@ -31,7 +33,7 @@ const CropFirstImg = () => {
         phaseFirstCrop,
         magSecondCrop,
         phaseSecondCrop,
-        } = useContext(FileContext);
+    } = useContext(FileContext);
 
     const handleFileFirstUpload = (e) => {
         setFirstFile(URL.createObjectURL(e.target.files[0]));
@@ -76,12 +78,22 @@ const CropFirstImg = () => {
 
     return (
         <div className='first-image-container'>
-            <div className = "first-image">
+            <div className="first-image">
 
                 <div className='buttons'>
-                    <button onClick={handleSelectClick}>
-                        <FaCrop />
-                    </button>
+                    <div>
+                    <BootstrapSwitchButton
+                        checked={false}
+                        onlabel='Admin User'
+                        onstyle='danger'
+                        offlabel='Regular User'
+                        offstyle='success'
+                        style='w-50 mx-2'
+                        onChange={() => {
+                            setCheckMode(!checkMode)
+                        }}
+                    />
+                    </div>
                     <button onClick={handleButtonClick}>
                         <BsFillCloudUploadFill />
                     </button>
@@ -101,30 +113,30 @@ const CropFirstImg = () => {
                         <ReactCrop crop={firstCrop} onChange={(c, per) => setFirstCrop(per)}
                             onComplete={(px, percent) => {
                                 axios.post('/select',
-                                {
-                                    "original_First_Id" : originalFirstImgId,
-                                    "original_First_Crop" : firstCrop,
-                                    "original_Second_Id" : originalSecondImgId,
-                                    "original_Second_Crop" : secondCrop,
-                                    "mag_First_Id" : `mag${originalFirstImgId}`,
-                                    "mag_First_Crop" : magFirstCrop,
-                                    "phase_First_Id" : `phase${originalFirstImgId}`,
-                                    "phase_First_Crop" : phaseFirstCrop,
-                                    "mag_Second_Id" : `mag${originalSecondImgId}`,
-                                    "mag_Second_Crop" : magSecondCrop,
-                                    "phase_Second_Id" : `phase${originalSecondImgId}`,
-                                    "phase_Second_Crop" : phaseSecondCrop,
-                                }
+                                    {
+                                        "original_First_Id": originalFirstImgId,
+                                        "original_First_Crop": firstCrop,
+                                        "original_Second_Id": originalSecondImgId,
+                                        "original_Second_Crop": secondCrop,
+                                        "mag_First_Id": `mag${originalFirstImgId}`,
+                                        "mag_First_Crop": magFirstCrop,
+                                        "phase_First_Id": `phase${originalFirstImgId}`,
+                                        "phase_First_Crop": phaseFirstCrop,
+                                        "mag_Second_Id": `mag${originalSecondImgId}`,
+                                        "mag_Second_Crop": magSecondCrop,
+                                        "phase_Second_Id": `phase${originalSecondImgId}`,
+                                        "phase_Second_Crop": phaseSecondCrop,
+                                    }
                                 ).then((response) => {
                                     console.log(response)
                                 }).catch((err) => {
                                     console.log(err)
                                 })
                             }}>
-                            <img style={{ width: originalFirstURL !== null ? "auto" : "auto", height: originalFirstURL !== null? "40vh" : "auto", marginTop:"auto", marginBottom: "auto"}} src={originalFirstURL} />
+                            <img style={{ width: originalFirstURL !== null ? "auto" : "auto", height: originalFirstURL !== null ? "40vh" : "auto", marginTop: "auto", marginBottom: "auto" }} src={originalFirstURL} />
                         </ReactCrop>
                     ) :
-                        <img style={{ width: firstFile !== undefined ? "auto" : "auto", height: firstFile !== undefined ? "40vh" : "auto", marginTop:"auto", marginBottom: "auto" }} src={originalFirstURL} />
+                        <img style={{ width: firstFile !== undefined ? "auto" : "auto", height: firstFile !== undefined ? "40vh" : "auto", marginTop: "auto", marginBottom: "auto" }} src={originalFirstURL} />
                     }
                 </div>
 
