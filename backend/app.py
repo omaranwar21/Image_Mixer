@@ -2,7 +2,9 @@ from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import os.path
 
+
 import processing
+from image import *
 
 IMG_FOLDER = '.\\files\images'
 
@@ -24,11 +26,16 @@ def img():
         if "Img" not in request.files:
             return {"Error": 'File Not Found'}, 404
 
-        image = request.files["Img"]
+        imageFile = request.files["Img"]
         imgId = str(processing.counter.imgId)
         fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
-        image.save(fullPath)
-        processing.resize_image(fullPath)
+        imageFile.save(fullPath)
+
+        image = image(fullPath)
+        image.resize()
+        cv2.imwrite(fullPath,image.image)
+
+        # processing.resize_image(fullPath)
         return {"img_url": "http://127.0.0.1:5000/api/img?img="+imgId, "imgId": imgId}, 200
 
 
