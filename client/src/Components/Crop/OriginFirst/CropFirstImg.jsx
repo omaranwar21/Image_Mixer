@@ -1,8 +1,9 @@
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import React, { useContext, useRef, useState } from 'react'
-import { FileContext } from '../contexts/fileContext'
-import axios from '../../Global/API/axios'
+import { FileContext } from '../../contexts/fileContext'
+import axios from '../../../Global/API/axios'
+import './CropFirstImg.css'
 
 const CropFirstImg = () => {
     const inputFile = useRef(null);
