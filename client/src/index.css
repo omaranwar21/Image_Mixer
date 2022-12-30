@@ -13,6 +13,6 @@ code {
 }
 
 body {
-  margin: 0;
-  padding: 0;
+  background-color: rgb(0,0,0) !important; /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.5) !important;
 }

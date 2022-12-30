@@ -4,7 +4,8 @@ import React, { useContext, useRef } from 'react'
 import { FileContext } from '../../contexts/fileContext'
 import axios from '../../../Global/API/axios'
 import './CropSecondImg.css'
-
+import { AiTwotoneDelete } from 'react-icons/ai';
+import { BsFillCloudUploadFill } from 'react-icons/bs';
 
 const CropSecondImg = () => {
     const inputFile = useRef(null);
@@ -67,51 +68,59 @@ const CropSecondImg = () => {
     }
 
     return (
-        <div>
-            <button onClick={handleButtonClick}>
-                Upload image 2
-            </button>
-            <button onClick={handleImgDelete}>
-                delete image 2
-            </button>
-            <input
-                type='file'
-                id='file'
-                ref={inputFile}
-                style={{ display: 'none' }}
-                onChange={onFileSecondUpload}
-            />
-            {checkMode === true ? (
-                <ReactCrop crop={secondCrop} onChange={(px, per) => setSecondCrop(per)}
-                    onComplete={(px, percent) => {
-                        axios.post('/select',
-                        {
-                            "original_First_Id" : originalFirstImgId,
-                            "original_First_Crop" : firstCrop,
-                            "original_Second_Id" : originalSecondImgId,
-                            "original_Second_Crop" : secondCrop,
-                            "mag_First_Id" : `mag${originalFirstImgId}`,
-                            "mag_First_Crop" : magFirstCrop,
-                            "phase_First_Id" : `phase${originalFirstImgId}`,
-                            "phase_First_Crop" : phaseFirstCrop,
-                            "mag_Second_Id" : `mag${originalSecondImgId}`,
-                            "mag_Second_Crop" : magSecondCrop,
-                            "phase_Second_Id" : `phase${originalSecondImgId}`,
-                            "phase_Second_Crop" : phaseSecondCrop,
-                        }
-                        ).then((response) => {
-                            console.log(response)
-                        }).catch((err) => {
-                            console.log(err)
-                        })
-                    }}
-                >
-                    <img style={{ width: originalSecondURL !== null ? "17rem" : "0", height: originalSecondURL !== null ? "17rem" : "0"}} src={originalSecondURL} />
-                </ReactCrop>
-            ) :
-                <img style={{ width: secondFile !== undefined ? "17rem" : "0", height: secondFile !== undefined ? "17rem" : "0" }} src={originalSecondURL} />
-            }
+        <div className='second-image-container'>
 
+            <div className = "second-image">
+
+                <div className='buttons-second'>
+                    <button onClick={handleButtonClick}>
+                        <BsFillCloudUploadFill />
+                    </button>
+                    <button onClick={handleImgDelete}>
+                        <AiTwotoneDelete />
+                    </button>
+                    <input
+                        type='file'
+                        id='file'
+                        ref={inputFile}
+                        style={{ display: 'none' }}
+                        onChange={onFileSecondUpload}
+                    />
+                </div>
+                <div className='image'>
+                    {checkMode === true ? (
+                        <ReactCrop crop={secondCrop} onChange={(px, per) => setSecondCrop(per)}
+                            onComplete={(px, percent) => {
+                                axios.post('/select',
+                                {
+                                    "original_First_Id" : originalFirstImgId,
+                                    "original_First_Crop" : firstCrop,
+                                    "original_Second_Id" : originalSecondImgId,
+                                    "original_Second_Crop" : secondCrop,
+                                    "mag_First_Id" : `mag${originalFirstImgId}`,
+                                    "mag_First_Crop" : magFirstCrop,
+                                    "phase_First_Id" : `phase${originalFirstImgId}`,
+                                    "phase_First_Crop" : phaseFirstCrop,
+                                    "mag_Second_Id" : `mag${originalSecondImgId}`,
+                                    "mag_Second_Crop" : magSecondCrop,
+                                    "phase_Second_Id" : `phase${originalSecondImgId}`,
+                                    "phase_Second_Crop" : phaseSecondCrop,
+                                }
+                                ).then((response) => {
+                                    console.log(response)
+                                }).catch((err) => {
+                                    console.log(err)
+                                })
+                            }}
+                        >
+                            <img style={{ width: originalSecondURL !== null ? "auto" : "auto", height: originalSecondURL !== null ? "40vh" : "auto", marginTop:"auto", marginBottom: "auto"}} src={originalSecondURL} />
+                        </ReactCrop>
+                    ) :
+                        <img style={{ width: secondFile !== undefined ? "auto" : "auto", height: secondFile !== undefined ? "40vh" : "auto", marginTop:"auto", marginBottom: "auto" }} src={originalSecondURL} />
+                    }
+
+                </div>
+            </div>
         </div>
     )
 }

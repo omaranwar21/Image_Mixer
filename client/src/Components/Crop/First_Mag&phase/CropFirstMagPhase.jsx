@@ -40,7 +40,7 @@ const CropFirstMagPhase = () => {
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+      <div className = "test" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
         {/* <button>
           crop image 1
         </button> */}
