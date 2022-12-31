@@ -10,6 +10,7 @@ matplotlib.use('Agg')
 
 
 class counter:
+    resultId= 0
     imgId = 0
 
 

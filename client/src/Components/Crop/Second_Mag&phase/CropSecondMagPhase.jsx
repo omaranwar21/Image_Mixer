@@ -29,7 +29,9 @@ const CropSecondMagPhase = () => {
     magFirstCrop,
     phaseFirstCrop,
     checkModeBinary,
-    setCheckModeBinary
+    setCheckModeBinary,
+    resultURL,
+    setResultURL
   } = useContext(FileContext);
 
   const handleClick1 = () => {
@@ -68,6 +70,12 @@ const CropSecondMagPhase = () => {
                       }
                     ).then((response) => {
                       console.log(response)
+                      setResultURL("")
+                      console.log("lol1");
+                      console.log(resultURL);
+                      setResultURL(response.data.mag_img_url)
+                      console.log("lol2");
+                      console.log(resultURL);
                     }).catch((err) => {
                       console.log(err)
                     })
@@ -101,6 +109,7 @@ const CropSecondMagPhase = () => {
                       }
                     ).then((response) => {
                       console.log(response)
+                      setResultURL(response.data.mag_img_url)
                     }).catch((err) => {
                       console.log(err)
                     })

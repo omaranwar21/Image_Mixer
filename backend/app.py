@@ -19,6 +19,8 @@ def img():
     # get the image
     if request.method == 'GET':
         id = request.args.get('img')
+        if "result" in id:
+            return send_from_directory(directory=app.config['IMG_FOLDER'], path='result.png')
         imgPath = str(id) + '.png'
         return send_from_directory(directory=app.config['IMG_FOLDER'], path=imgPath)
 
@@ -55,18 +57,12 @@ def combImgs():
 @app.route('/api/select', methods=['GET', 'POST'])
 def select():
     if request.method == 'POST':
+        processing.counter.resultId +=1
         data = request.get_json()
         f_image = processing.db.fft_images[str(data['fid'])]  # first image
         s_image = processing.db.fft_images[str(data['sid'])]  # second image
 
         if data['mode']:  # crop magnitude or phase
-            if data['flag']:  # 1st mag, 2nd phase
-                processing.construct_image(f_image.magnitude, s_image.angle,
-                                cropMag=data['magFirstCrop'], cropPhase=data['phaseSecondCrop'])
-            else:  # 1st phase, 2nd mag
-                processing.construct_image(s_image.magnitude, f_image.angle,
-                                cropMag=data['magSecondCrop'], cropPhase=data['phaseFirstCrop'])
-        else:  # crop from the orginal image
             fcroped_image = f_image.crop_2d(data['firstCrop'])
             f_mag, f_angle = processing.magnitude_angle(fcroped_image)
 
@@ -77,10 +73,17 @@ def select():
                 processing.construct_image(f_mag, s_angle, 0)
             else:  # 1st phase, 2nd mag
                 processing.construct_image(s_mag, f_angle, 0)
+        else:  # crop from the orginal image
+            if data['flag']:  # 1st mag, 2nd phase
+                processing.construct_image(f_image.magnitude, s_image.angle,
+                                cropMag=data['magFirstCrop'], cropPhase=data['phaseSecondCrop'])
+            else:  # 1st phase, 2nd mag
+                processing.construct_image(s_image.magnitude, f_image.angle,
+                                cropMag=data['magSecondCrop'], cropPhase=data['phaseFirstCrop'])
 
         # processing.crop_2d_img(
         #     0, [0,1, 0, 0, 1], data['x'], data['y'], data['width'], data['height'])
-        return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=result"}
+        return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=result"+str(processing.counter.resultId),"data": data}
 
 
 @app.route('/api/construct', methods=['GET', 'POST'])

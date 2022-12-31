@@ -74,6 +74,8 @@ const FileContextProvider = ({ children }) => {
     const [checkMerge, setCheckMerge] = useState(1)
     const [checkMode, setCheckMode] = useState(false);
     const [checkModeBinary,setCheckModeBinary] = useState();
+    // result 
+    const [resultURL, setResultURL] = useState(1)
 
     return (
         <FileContext.Provider
@@ -115,7 +117,9 @@ const FileContextProvider = ({ children }) => {
                 originalSecondImgId,
                 setOriginalSecondImgId,
                 checkModeBinary,
-                setCheckModeBinary
+                setCheckModeBinary,
+                resultURL,
+                setResultURL
             }}>
             {children}
         </FileContext.Provider>

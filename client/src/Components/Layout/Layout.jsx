@@ -7,6 +7,7 @@ import CropFirstImg from '../Crop/OriginFirst/CropFirstImg'
 import CropSecondImg from '../Crop/OriginSecond/CropSecondImg'
 import CropFirstMagPhase from '../Crop/First_Mag&phase/CropFirstMagPhase';
 import CropSecondMagPhase from '../Crop/Second_Mag&phase/CropSecondMagPhase';
+import Result from '../Crop/Result/Result';
 
 const Layout = () => {
   return (
@@ -31,7 +32,7 @@ const Layout = () => {
               </Row>
             </Col>
             <Col md={4} style={{height:"100vh"}}>
-              output
+              <Result/>
             </Col>
         </Row>
     </Container>

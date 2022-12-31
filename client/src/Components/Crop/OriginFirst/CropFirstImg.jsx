@@ -37,7 +37,9 @@ const CropFirstImg = () => {
         setCheckModeBinary,
         checkMerge,
         setCheckMerge,
-    } = useContext(FileContext);
+        resultURL,
+        setResultURL
+        } = useContext(FileContext);
 
     useEffect(() => {
         if (checkMode === false) {
@@ -146,6 +148,7 @@ const CropFirstImg = () => {
                                     }
                                 ).then((response) => {
                                     console.log(response)
+                                    setResultURL(response.data.mag_img_url)
                                 }).catch((err) => {
                                     console.log(err)
                                 })

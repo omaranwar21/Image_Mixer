@@ -33,7 +33,9 @@ const CropSecondImg = () => {
         checkModeBinary,
         setCheckModeBinary,
         checkMerge,
-        setCheckMerge
+        setCheckMerge,
+        resultURL,
+    setResultURL
     } = useContext(FileContext);
 
     const onFileSecondUpload = (e) => {
@@ -112,6 +114,7 @@ const CropSecondImg = () => {
                                 }
                                 ).then((response) => {
                                     console.log(response)
+                                    setResultURL(response.data.mag_img_url)
                                 }).catch((err) => {
                                     console.log(err)
                                 })
