@@ -50,7 +50,7 @@ const CropSecondMagPhase = () => {
           </button> */}
           <div className='image-second-mag-phase'>
             {checkMode !== true && checkMerge === 0 ? (
-              <button onClick={handleClick2} style={{ backgroundColor: "transparent", borderColor: checkMerge === 0 ? "red" : "transparent", width: view, height: view }}>
+              <button onClick={handleClick2} style={{ backgroundColor: "transparent", borderColor: checkMerge === 0 ? "red" : "transparent", width: view, height: view, display: secondFile === undefined ? "none" : null }}>
                 <ReactCrop crop={magSecondCrop} onChange={(c, per) => setMagSecondCrop(per)}
                   onComplete={(px, percent) => {
                     axios.post('/select',
@@ -72,18 +72,18 @@ const CropSecondMagPhase = () => {
                       console.log(err)
                     })
                   }}>
-                  <img style={{ width: originalSecondURL !== null ? view : view, height: originalSecondURL !== null ? view : view }} src={magnitudeSecondURL} />
+                  <img style={{ width: originalSecondURL !== null ? view : view, height: originalSecondURL !== null ? view : view, display: secondFile === undefined ? "none" : null }} src={magnitudeSecondURL} />
                 </ReactCrop>
               </button>
             ) :
-              <button onClick={handleClick2} style={{ backgroundColor: "transparent", borderColor: checkMerge === 0 ? "red" : "transparent" }}>
-                <img style={{ width: secondFile !== undefined ? view : view, height: secondFile !== undefined ? view : view }} src={magnitudeSecondURL} />
+              <button onClick={handleClick2} style={{ backgroundColor: "transparent", borderColor: checkMerge === 0 ? "red" : "transparent", display: secondFile === undefined ? "none" : null }}>
+                <img style={{ width: secondFile !== undefined ? view : view, height: secondFile !== undefined ? view : view, display: secondFile === undefined ? "none" : null }} src={magnitudeSecondURL} />
               </button>
             }
           </div>
           <div className='image-second-mag-phase'>
             {checkMode !== true && checkMerge === 1 ? (
-              <button onClick={handleClick1} style={{ backgroundColor: "transparent", borderColor: checkMerge === 1 ? "red" : "transparent", width: view, height: view }}>
+              <button onClick={handleClick1} style={{ backgroundColor: "transparent", borderColor: checkMerge === 1 ? "red" : "transparent", width: view, height: view, display: secondFile === undefined ? "none" : null }}>
                 <ReactCrop crop={phaseSecondCrop} onChange={(c, per) => setPhaseSecondCrop(per)}
                   onComplete={(px, percent) => {
                     axios.post('/select',
@@ -105,16 +105,17 @@ const CropSecondMagPhase = () => {
                       console.log(err)
                     })
                   }}>
-                  <img style={{ width: originalSecondURL !== null ? view : view, height: originalSecondURL !== null ? view : view }} src={phaseSecondURL} />
+                  <img style={{ width: originalSecondURL !== null ? view : view, height: originalSecondURL !== null ? view : view, display: secondFile === undefined ? "none" : null }} src={phaseSecondURL} />
                 </ReactCrop>
               </button>
             ) :
-              <button onClick={handleClick1} style={{ backgroundColor: "transparent", borderColor: checkMerge === 1 ? "red" : "transparent" }}>
-                <img style={{ width: secondFile !== undefined ? view : view, height: secondFile !== undefined ? view : view }} src={phaseSecondURL} />
+              <button onClick={handleClick1} style={{ backgroundColor: "transparent", borderColor: checkMerge === 1 ? "red" : "transparent", display: secondFile === undefined ? "none" : null }}>
+                <img style={{ width: secondFile !== undefined ? view : view, height: secondFile !== undefined ? view : view, display: secondFile === undefined ? "none" : null }} src={phaseSecondURL} />
               </button>
             }
           </div>
         </div>
+        <div className='space space-right'> </div>
       </div>
     </div>
   )

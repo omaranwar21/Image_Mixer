@@ -52,7 +52,7 @@ const CropFirstMagPhase = () => {
           </button> */}
           <div className='image-first-mag-phase'>
             {checkMode !== true && checkMerge === 1 ? (
-              <button onClick={handleClick1} style={{ backgroundColor: "transparent", borderColor: checkMerge === 1 ? "red" : "transparent", width: view, height: view }}>
+              <button onClick={handleClick1} style={{ backgroundColor: "transparent", borderColor: checkMerge === 1 ? "red" : "transparent", width: view, height: view, display: firstFile === undefined ? "none" : null }}>
                 <ReactCrop crop={magFirstCrop} onChange={(c, per) => setMagFirstCrop(per)}
                   onComplete={(px, percent) => {
                     axios.post('/select',
@@ -74,18 +74,18 @@ const CropFirstMagPhase = () => {
                       console.log(err)
                     })
                   }}>
-                  <img style={{ width: originalFirstURL !== null ? view : view, height: originalFirstURL !== null ? view : view }} src={magnitudeFirstURL} />
+                  <img style={{ width: originalFirstURL !== null ? view : view, height: originalFirstURL !== null ? view : view, display: firstFile === undefined ? "none" : null }} src={magnitudeFirstURL} />
                 </ReactCrop>
               </button>
             ) :
-              <button onClick={handleClick1} style={{ backgroundColor: "transparent", borderColor: checkMerge === 1 ? "red" : "transparent" }}>
+              <button onClick={handleClick1} style={{ backgroundColor: "transparent", borderColor: checkMerge === 1 ? "red" : "transparent", display: firstFile === undefined ? "none" : null }}>
                 <img style={{ width: firstFile !== undefined ? view : view, height: firstFile !== undefined ? view : view }} src={magnitudeFirstURL} />
               </button>
             }
           </div>
           <div className='image-first-mag-phase'>
             {checkMode !== true && checkMerge === 0 ? (
-              <button onClick={handleClick2} style={{ backgroundColor: "transparent", borderColor: checkMerge === 0 ? "red" : "transparent", width: view, height: view }}>
+              <button onClick={handleClick2} style={{ backgroundColor: "transparent", borderColor: checkMerge === 0 ? "red" : "transparent", width: view, height: view, display: firstFile === undefined ? "none" : null }}>
                 <ReactCrop crop={phaseFirstCrop} onChange={(c, per) => setPhaseFirstCrop(per)}
                   onComplete={(px, percent) => {
                     axios.post('/select',
@@ -107,16 +107,17 @@ const CropFirstMagPhase = () => {
                       console.log(err)
                     })
                   }}>
-                  <img style={{ width: originalFirstURL !== null ? view : view, height: originalFirstURL !== null ? view : view }} src={phaseFirstURL} />
+                  <img style={{ width: originalFirstURL !== null ? view : view, height: originalFirstURL !== null ? view : view, display: firstFile === undefined ? "none" : null }} src={phaseFirstURL} />
                 </ReactCrop>
               </button>
             ) :
-              <button onClick={handleClick2} style={{ backgroundColor: "transparent", borderColor: checkMerge === 0 ? "red" : "transparent" }}>
-                <img style={{ width: firstFile !== undefined ? view : view, height: firstFile !== undefined ? view : view }} src={phaseFirstURL} />
+              <button onClick={handleClick2} style={{ backgroundColor: "transparent", borderColor: checkMerge === 0 ? "red" : "transparent", display: firstFile === undefined ? "none" : null }}>
+                <img style={{ width: firstFile !== undefined ? view : view, height: firstFile !== undefined ? view : view, display: firstFile === undefined ? "none" : null }} src={phaseFirstURL} />
               </button>
             }
           </div>
         </div>
+        <div className='space space-right'> </div>
       </div>
     </div>
   )

@@ -50,4 +50,6 @@
     padding: -1px;
 }
 
-
+.space-right{
+    transform: rotateY(180deg);
+}

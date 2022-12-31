@@ -37,9 +37,9 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 2vh;
+    gap: 9vh;
     background-color: whitesmoke;
-    padding: 0.5%;
+    padding: 0.6% 0% 0.6% 1.5%;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0, 0.65);
 }
@@ -53,22 +53,22 @@
     transition:  color 0.2s, border-color 0.2s, background-color 0.2s;
 }
 
-.buttons button:nth-child(3):hover{
+.buttons button:nth-child(2):hover{
     background-color: rgba(255, 0, 0, 0.546);
     border-color: red;
     color: aliceblue;
 }
 
-.buttons button:nth-child(2):hover{
+.buttons button:nth-child(1):hover{
     background-color: rgba(42, 166, 249, 0.45);
     border-color: blue;
     color: aliceblue;
 }
-.buttons button:nth-child(1):hover{
+/* .buttons button:nth-child(1):hover{
     background-color: rgba(21, 255, 138, 0.763);
     border-color: green;
     color: aliceblue;
-}
+} */
 
 .upload-delete{
     display: flex;
