@@ -81,25 +81,27 @@ const CropFirstImg = () => {
             <div className="first-image">
 
                 <div className='buttons'>
-                    <div>
-                    <BootstrapSwitchButton
-                        checked={false}
-                        onlabel='Admin User'
-                        onstyle='danger'
-                        offlabel='Regular User'
-                        offstyle='success'
-                        style='w-50 mx-2'
-                        onChange={() => {
-                            setCheckMode(!checkMode)
-                        }}
-                    />
+                    <div className='upload-delete'>
+                        <button onClick={handleButtonClick}>
+                            <BsFillCloudUploadFill />
+                        </button>
+                        <button onClick={handleImgDelete}>
+                            <AiTwotoneDelete />
+                        </button>
                     </div>
-                    <button onClick={handleButtonClick}>
-                        <BsFillCloudUploadFill />
-                    </button>
-                    <button onClick={handleImgDelete}>
-                        <AiTwotoneDelete />
-                    </button>
+                    <div className='switch'>
+                        <BootstrapSwitchButton
+                            checked={false}
+                            onlabel='Admin User'
+                            onstyle='danger'
+                            offlabel='Regular User'
+                            offstyle='success'
+                            style='w-1000 mx-2'
+                            onChange={() => {
+                                setCheckMode(!checkMode)
+                            }}
+                        />
+                    </div>
                     <input
                         type='file'
                         id='file'
