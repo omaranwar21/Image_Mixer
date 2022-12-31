@@ -105,21 +105,21 @@ def resize_image(image_path, flag=1):
 
 
 def construct_image(magnitude, angle,mode =1,**kwargs):
-    # flag = 0
+    flag = 0
     if mode:
         cropMag = kwargs['cropMag']
         cropPhase = kwargs['cropPhase']
         magnitude = crop_2d_img(magnitude,cropMag)
         angle = crop_2d_img(angle,cropPhase)
-        # if(cropPhase['height'] != 0 and cropPhase['width'] != 0):
-        #     flag = 1
+        if(cropPhase['height'] != 0 and cropPhase['width'] != 0):
+            flag = 1
 
 
     combined = np.multiply(magnitude, np.exp(np.multiply(1j,angle)))
     combined = np.fft.ifftshift(combined)
     image_combined = np.abs(np.fft.ifft2(combined))
-    # if flag:
-    image_combined = cv2.equalizeHist(image_combined.astype(np.uint8))
+    if flag:
+        image_combined = cv2.equalizeHist(image_combined.astype(np.uint8))
 
     cv2.imwrite('../backend/files/images/result.png', image_combined)
     return image_combined

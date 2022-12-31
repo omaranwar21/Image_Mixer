@@ -13,6 +13,10 @@ code {
 }
 
 body {
-  background-color: rgb(0,0,0) !important; /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  background-color: rgba(0, 37, 64, 0.2) !important;
+}
+
+:root{
+  --space-color: rgb(20, 46, 84); /*0.9*/
+  --image-background-color : transparent; /*0.4*/
 }
