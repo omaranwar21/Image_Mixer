@@ -59,6 +59,7 @@ def select():
     if request.method == 'POST':
         processing.counter.resultId +=1
         data = request.get_json()
+        print(data)
         f_image = processing.db.fft_images[str(data['fid'])]  # first image
         s_image = processing.db.fft_images[str(data['sid'])]  # second image
 

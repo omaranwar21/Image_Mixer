@@ -4,6 +4,7 @@ const FileContext = createContext();
 const FileContextProvider = ({ children }) => {
     // original first
     const [firstFile, setFirstFile] = useState();
+    const [firstFileBinary, setFirstFileBinary] = useState();
     const [originalFirstURL, setOriginalFirstURL] = useState()
     const [originalFirstImgId, setOriginalFirstImgId] = useState()
     const [firstCrop, setFirstCrop] = useState(
@@ -17,6 +18,7 @@ const FileContextProvider = ({ children }) => {
     )
     // original second
     const [secondFile, setSecondFile] = useState();
+    const [secondFileBinary, setSecondFileBinary] = useState();
     const [originalSecondURL, setOriginalSecondURL] = useState()
     const [originalSecondImgId, setOriginalSecondImgId] = useState()
     const [secondCrop, setSecondCrop] = useState(
@@ -119,7 +121,11 @@ const FileContextProvider = ({ children }) => {
                 checkModeBinary,
                 setCheckModeBinary,
                 resultURL,
-                setResultURL
+                setResultURL,
+                firstFileBinary,
+                setFirstFileBinary,
+                secondFileBinary,
+                setSecondFileBinary
             }}>
             {children}
         </FileContext.Provider>

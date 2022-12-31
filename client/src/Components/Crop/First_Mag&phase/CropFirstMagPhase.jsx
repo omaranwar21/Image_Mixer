@@ -35,10 +35,48 @@ const CropFirstMagPhase = () => {
   } = useContext(FileContext);
 
   const handleClick1 = () => {
+    axios.post('/select',
+      {
+        "fid": originalFirstImgId,
+        "firstCrop": firstCrop,
+        "sid": originalSecondImgId,
+        "secondCrop": secondCrop,
+        "magFirstCrop": magFirstCrop,
+        "phaseFirstCrop": phaseFirstCrop,
+        "magSecondCrop": magSecondCrop,
+        "phaseSecondCrop": phaseSecondCrop,
+        "mode": checkModeBinary,
+        "flag": checkMerge,
+      }
+    ).then((response) => {
+      console.log(response)
+      setResultURL(response.data.mag_img_url)
+    }).catch((err) => {
+      console.log(err)
+    })
     setCheckMerge(1)
   }
 
   const handleClick2 = () => {
+    axios.post('/select',
+      {
+        "fid": originalFirstImgId,
+        "firstCrop": firstCrop,
+        "sid": originalSecondImgId,
+        "secondCrop": secondCrop,
+        "magFirstCrop": magFirstCrop,
+        "phaseFirstCrop": phaseFirstCrop,
+        "magSecondCrop": magSecondCrop,
+        "phaseSecondCrop": phaseSecondCrop,
+        "mode": checkModeBinary,
+        "flag": checkMerge,
+      }
+    ).then((response) => {
+      console.log(response)
+      setResultURL(response.data.mag_img_url)
+    }).catch((err) => {
+      console.log(err)
+    })
     setCheckMerge(0)
   }
 
@@ -73,6 +111,7 @@ const CropFirstMagPhase = () => {
                     ).then((response) => {
                       console.log(response)
                       setResultURL(response.data.mag_img_url)
+                      setCheckMerge(1)
                     }).catch((err) => {
                       console.log(err)
                     })

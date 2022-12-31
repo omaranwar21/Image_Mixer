@@ -1,6 +1,6 @@
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useRef , useEffect } from 'react'
 import { FileContext } from '../../contexts/fileContext'
 import axios from '../../../Global/API/axios'
 import './CropSecondImg.css'
@@ -35,8 +35,20 @@ const CropSecondImg = () => {
         checkMerge,
         setCheckMerge,
         resultURL,
-    setResultURL
+        setResultURL,
+        secondFileBinary,
+        setSecondFileBinary
     } = useContext(FileContext);
+
+    useEffect(() => {
+        if (secondFile !== undefined) {
+            setSecondFileBinary(1)
+        } else {
+            setSecondFileBinary(0)
+        }
+    }, [secondFile])
+
+    console.log(secondFileBinary);
 
     const onFileSecondUpload = (e) => {
         setSecondFile(URL.createObjectURL(e.target.files[0]));

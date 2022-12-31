@@ -35,12 +35,51 @@ const CropSecondMagPhase = () => {
   } = useContext(FileContext);
 
   const handleClick1 = () => {
+    axios.post('/select',
+      {
+        "fid": originalFirstImgId,
+        "firstCrop": firstCrop,
+        "sid": originalSecondImgId,
+        "secondCrop": secondCrop,
+        "magFirstCrop": magFirstCrop,
+        "phaseFirstCrop": phaseFirstCrop,
+        "magSecondCrop": magSecondCrop,
+        "phaseSecondCrop": phaseSecondCrop,
+        "mode": checkModeBinary,
+        "flag": checkMerge,
+      }
+    ).then((response) => {
+      console.log(response)
+      setResultURL(response.data.mag_img_url)
+    }).catch((err) => {
+      console.log(err)
+    })
     setCheckMerge(1)
   }
 
   const handleClick2 = () => {
+    axios.post('/select',
+      {
+        "fid": originalFirstImgId,
+        "firstCrop": firstCrop,
+        "sid": originalSecondImgId,
+        "secondCrop": secondCrop,
+        "magFirstCrop": magFirstCrop,
+        "phaseFirstCrop": phaseFirstCrop,
+        "magSecondCrop": magSecondCrop,
+        "phaseSecondCrop": phaseSecondCrop,
+        "mode": checkModeBinary,
+        "flag": checkMerge,
+      }
+    ).then((response) => {
+      console.log(response)
+      setResultURL(response.data.mag_img_url)
+    }).catch((err) => {
+      console.log(err)
+    })
     setCheckMerge(0)
   }
+  console.log(checkMerge);
 
   return (
     <div className='second-mag-phase-container'>

@@ -38,7 +38,9 @@ const CropFirstImg = () => {
         checkMerge,
         setCheckMerge,
         resultURL,
-        setResultURL
+        setResultURL,
+        firstFileBinary,
+        setFirstFileBinary
         } = useContext(FileContext);
 
     useEffect(() => {
@@ -50,6 +52,17 @@ const CropFirstImg = () => {
     }, [checkMode])
 
     console.log(checkModeBinary);
+
+    useEffect(() => {
+        if (firstFile !== undefined) {
+            setFirstFileBinary(1)
+        } else {
+            setFirstFileBinary(0)
+        }
+    }, [firstFile])
+
+    console.log(firstFileBinary);
+
 
 
     const handleFileFirstUpload = (e) => {
