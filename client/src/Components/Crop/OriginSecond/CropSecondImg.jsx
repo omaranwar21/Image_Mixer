@@ -67,6 +67,8 @@ const CropSecondImg = () => {
 
     const handleImgDelete = () => {
         setOriginalSecondURL(null)
+        setMagnitudeSecondURL(null)
+        setphaseSecondURL(null)
         setSecondFile(undefined)
         inputFile.current.value = null
     }

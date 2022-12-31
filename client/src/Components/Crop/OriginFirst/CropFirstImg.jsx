@@ -36,7 +36,7 @@ const CropFirstImg = () => {
         checkModeBinary,
         setCheckModeBinary,
         checkMerge,
-        setCheckMerge
+        setCheckMerge,
     } = useContext(FileContext);
 
     useEffect(() => {
@@ -81,6 +81,8 @@ const CropFirstImg = () => {
 
     const handleImgDelete = () => {
         setOriginalFirstURL(null)
+        setMagnitudeFirstURL(null)
+        setphaseFirstURL(null)
         setFirstFile(undefined)
         inputFile.current.value = null
     }
