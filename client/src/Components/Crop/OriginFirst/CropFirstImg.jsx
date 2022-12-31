@@ -40,8 +40,10 @@ const CropFirstImg = () => {
         resultURL,
         setResultURL,
         firstFileBinary,
-        setFirstFileBinary
-        } = useContext(FileContext);
+        setFirstFileBinary,
+        secondFileBinary,
+        setSecondFileBinary
+    } = useContext(FileContext);
 
     useEffect(() => {
         if (checkMode === false) {
@@ -69,6 +71,8 @@ const CropFirstImg = () => {
         setFirstFile(URL.createObjectURL(e.target.files[0]));
         const formData = new FormData();
         formData.append("Img", e.target.files[0])
+        formData.append("f_file", firstFileBinary)
+        formData.append("s_file", secondFileBinary)
         axios.post('/img',
             formData
         ).then((response) => {
@@ -79,6 +83,27 @@ const CropFirstImg = () => {
                 setMagnitudeFirstURL(response.data.mag_img_url)
                 setphaseFirstURL(response.data.phase_img_url)
                 console.log(response)
+                if (firstFileBinary === 1 && secondFileBinary === 1) {
+                    axios.post('/select',
+                        {
+                            "fid": originalFirstImgId,
+                            "firstCrop": firstCrop,
+                            "sid": originalSecondImgId,
+                            "secondCrop": secondCrop,
+                            "magFirstCrop": magFirstCrop,
+                            "phaseFirstCrop": phaseFirstCrop,
+                            "magSecondCrop": magSecondCrop,
+                            "phaseSecondCrop": phaseSecondCrop,
+                            "mode": checkModeBinary,
+                            "flag": checkMerge,
+                        }
+                    ).then((response) => {
+                        console.log(response)
+                        setResultURL(response.data.mag_img_url)
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                }
             }).catch((err) => {
                 console.log(err)
             })
