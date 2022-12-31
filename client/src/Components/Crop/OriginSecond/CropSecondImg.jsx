@@ -30,6 +30,10 @@ const CropSecondImg = () => {
         phaseFirstCrop,
         magSecondCrop,
         phaseSecondCrop,
+        checkModeBinary,
+        setCheckModeBinary,
+        checkMerge,
+        setCheckMerge
     } = useContext(FileContext);
 
     const onFileSecondUpload = (e) => {
@@ -40,11 +44,11 @@ const CropSecondImg = () => {
             formData
         ).then((response) => {
             setOriginalSecondURL(response.data.img_url)
+            setOriginalSecondImgId(response.data.imgId)
             axios.get(`/combImg?imgId=${response.data.imgId}`
             ).then((response) => {
                 setMagnitudeSecondURL(response.data.mag_img_url)
                 setphaseSecondURL(response.data.phase_img_url)
-                setOriginalSecondImgId(response.data.imgId)
                 console.log(response)
             }).catch((err) => {
                 console.log(err)
@@ -93,18 +97,16 @@ const CropSecondImg = () => {
                             onComplete={(px, percent) => {
                                 axios.post('/select',
                                 {
-                                    "original_First_Id" : originalFirstImgId,
-                                    "original_First_Crop" : firstCrop,
-                                    "original_Second_Id" : originalSecondImgId,
-                                    "original_Second_Crop" : secondCrop,
-                                    "mag_First_Id" : `mag${originalFirstImgId}`,
-                                    "mag_First_Crop" : magFirstCrop,
-                                    "phase_First_Id" : `phase${originalFirstImgId}`,
-                                    "phase_First_Crop" : phaseFirstCrop,
-                                    "mag_Second_Id" : `mag${originalSecondImgId}`,
-                                    "mag_Second_Crop" : magSecondCrop,
-                                    "phase_Second_Id" : `phase${originalSecondImgId}`,
-                                    "phase_Second_Crop" : phaseSecondCrop,
+                                        "original_First_Id": originalFirstImgId,
+                                        "original_First_Crop": firstCrop,
+                                        "original_Second_Id": originalSecondImgId,
+                                        "original_Second_Crop": secondCrop,
+                                        "mag_First_Crop": magFirstCrop,
+                                        "phase_First_Crop": phaseFirstCrop,
+                                        "mag_Second_Crop": magSecondCrop,
+                                        "phase_Second_Crop": phaseSecondCrop,
+                                        "check_mode": checkModeBinary,
+                                        "check_merge": checkMerge,
                                 }
                                 ).then((response) => {
                                     console.log(response)

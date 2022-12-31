@@ -71,8 +71,9 @@ const FileContextProvider = ({ children }) => {
         }
     )
     // global 
-    const [mo, setMo] = useState(true)
+    const [checkMerge, setCheckMerge] = useState(1)
     const [checkMode, setCheckMode] = useState(false);
+    const [checkModeBinary,setCheckModeBinary] = useState();
 
     return (
         <FileContext.Provider
@@ -107,12 +108,14 @@ const FileContextProvider = ({ children }) => {
                 setMagSecondCrop,
                 phaseSecondCrop,
                 setPhaseSecondCrop,
-                mo,
-                setMo,
+                checkMerge,
+                setCheckMerge,
                 originalFirstImgId,
                 setOriginalFirstImgId,
                 originalSecondImgId,
-                setOriginalSecondImgId
+                setOriginalSecondImgId,
+                checkModeBinary,
+                setCheckModeBinary
             }}>
             {children}
         </FileContext.Provider>
