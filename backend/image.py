@@ -19,7 +19,7 @@ class Image:
 
         for x in range(int(coordinates[0]), int(coordinates[1])):
             for y in range(int(coordinates[2]), int(coordinates[3])):
-                cutted_img[max_height-y, x] = self.image[max_height-y, x]
+                cutted_img[y, x] = self.image[y, x]
         return cutted_img
 
     def points(self,x_percentage, y_percentage, width, height):

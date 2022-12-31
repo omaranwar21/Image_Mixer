@@ -8,10 +8,20 @@ const Result = () => {
         resultURL,
         setResultURL
       } = useContext(FileContext);
-
+    
   return (
-    <div>
-        <img style={{width:"15rem",height:"15rem"}} src={resultURL} alt="" />
+    <div className='result'>
+      <div className='image-result'>
+          <div className="borders up">
+            <div></div>
+            <div></div>
+          </div>
+          <img style={{width: "40vh",height: "40vh", display: resultURL === undefined ? "none" : null}} src={resultURL} alt="" />
+          <div className="borders down">
+            <div></div>
+            <div></div>
+          </div>
+      </div>
     </div>
   )
 }

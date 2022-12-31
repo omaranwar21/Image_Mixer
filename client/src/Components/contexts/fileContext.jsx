@@ -75,7 +75,7 @@ const FileContextProvider = ({ children }) => {
     const [checkMode, setCheckMode] = useState(false);
     const [checkModeBinary,setCheckModeBinary] = useState();
     // result 
-    const [resultURL, setResultURL] = useState(1)
+    const [resultURL, setResultURL] = useState()
 
     return (
         <FileContext.Provider
