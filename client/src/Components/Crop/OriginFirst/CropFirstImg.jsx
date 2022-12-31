@@ -40,15 +40,15 @@ const CropFirstImg = () => {
     } = useContext(FileContext);
 
     useEffect(() => {
-      if (checkMode === false) {
-        setCheckModeBinary(0)
-      } else {
-        setCheckModeBinary(1)
-      }
+        if (checkMode === false) {
+            setCheckModeBinary(0)
+        } else {
+            setCheckModeBinary(1)
+        }
     }, [checkMode])
 
     console.log(checkModeBinary);
-    
+
 
     const handleFileFirstUpload = (e) => {
         setFirstFile(URL.createObjectURL(e.target.files[0]));
@@ -133,16 +133,16 @@ const CropFirstImg = () => {
                             onComplete={(px, percent) => {
                                 axios.post('/select',
                                     {
-                                        "original_First_Id": originalFirstImgId,
-                                        "original_First_Crop": firstCrop,
-                                        "original_Second_Id": originalSecondImgId,
-                                        "original_Second_Crop": secondCrop,
-                                        "mag_First_Crop": magFirstCrop,
-                                        "phase_First_Crop": phaseFirstCrop,
-                                        "mag_Second_Crop": magSecondCrop,
-                                        "phase_Second_Crop": phaseSecondCrop,
-                                        "check_mode": checkModeBinary,
-                                        "check_merge": checkMerge,
+                                        "fid": originalFirstImgId,
+                                        "firstCrop": firstCrop,
+                                        "sid": originalSecondImgId,
+                                        "secondCrop": secondCrop,
+                                        "magFirstCrop": magFirstCrop,
+                                        "phaseFirstCrop": phaseFirstCrop,
+                                        "magSecondCrop": magSecondCrop,
+                                        "phaseSecondCrop": phaseSecondCrop,
+                                        "mode": checkModeBinary,
+                                        "flag": checkMerge,
                                     }
                                 ).then((response) => {
                                     console.log(response)
