@@ -76,9 +76,9 @@ const FileContextProvider = ({ children }) => {
     const [checkMerge, setCheckMerge] = useState(1)
     const [checkMode, setCheckMode] = useState(false);
     const [checkModeBinary,setCheckModeBinary] = useState();
+    const [btnFlag, setBtnFlag] = useState(0)
     // result 
     const [resultURL, setResultURL] = useState()
-    const [btnFlag, setBtnFlag] = useState(0)
 
     return (
         <FileContext.Provider

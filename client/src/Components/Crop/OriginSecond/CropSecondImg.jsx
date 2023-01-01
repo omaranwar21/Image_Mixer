@@ -40,6 +40,8 @@ const CropSecondImg = () => {
         setSecondFileBinary,
         firstFileBinary,
         setFirstFileBinary,
+        firstFile,
+        originalFirstURL
     } = useContext(FileContext);
 
     useEffect(() => {
@@ -50,7 +52,7 @@ const CropSecondImg = () => {
         }
     }, [secondFile])
 
-    console.log(secondFileBinary);
+    //console.log(secondFileBinary);
 
     const onFileSecondUpload = (e) => {
         setSecondFile(URL.createObjectURL(e.target.files[0]));
@@ -67,7 +69,7 @@ const CropSecondImg = () => {
             ).then((response) => {
                 setMagnitudeSecondURL(response.data.mag_img_url)
                 setphaseSecondURL(response.data.phase_img_url)
-                console.log(response)
+                //console.log(response)
                 if (firstFileBinary === 1 && secondFileBinary === 1) {
                     axios.post('/select',
                         {
@@ -83,22 +85,22 @@ const CropSecondImg = () => {
                             "flag": checkMerge,
                         }
                     ).then((response) => {
-                        console.log(response)
+                        //console.log(response)
                         setResultURL(response.data.mag_img_url)
                     }).catch((err) => {
-                        console.log(err)
+                        //console.log(err)
                     })
                 }
             }).catch((err) => {
-                console.log(err)
+                //console.log(err)
             })
-            console.log(response)
+            //console.log(response)
         }).catch((err) => {
-            console.log(err)
+            //console.log(err)
         })
     }
-    console.log(secondFile);
-    console.log(secondCrop);
+    //console.log(secondFile);
+    //console.log(secondCrop);
 
     const handleButtonClick = () => {
         inputFile.current.click();
@@ -150,10 +152,10 @@ const CropSecondImg = () => {
                                         "flag": checkMerge,
                                     }
                                 ).then((response) => {
-                                    console.log(response)
+                                    //console.log(response)
                                     setResultURL(response.data.mag_img_url)
                                 }).catch((err) => {
-                                    console.log(err)
+                                    //console.log(err)
                                 })
                             }}
                         >

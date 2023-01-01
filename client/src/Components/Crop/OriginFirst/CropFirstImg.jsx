@@ -42,7 +42,9 @@ const CropFirstImg = () => {
         firstFileBinary,
         setFirstFileBinary,
         secondFileBinary,
-        setSecondFileBinary
+        setSecondFileBinary,
+        secondFile,
+        originalSecondURL
     } = useContext(FileContext);
 
     useEffect(() => {
@@ -53,7 +55,7 @@ const CropFirstImg = () => {
         }
     }, [checkMode])
 
-    console.log(checkModeBinary);
+    //console.log(checkModeBinary);
 
     useEffect(() => {
         if (firstFile !== undefined) {
@@ -63,7 +65,13 @@ const CropFirstImg = () => {
         }
     }, [firstFile])
 
-    console.log(firstFileBinary);
+    //console.log(firstFileBinary);
+
+    useEffect(() => {
+        if (originalFirstURL === null && originalSecondURL === null) {
+            setResultURL(undefined)
+        }
+    }, [originalFirstURL,originalSecondURL])
 
 
 
@@ -82,7 +90,7 @@ const CropFirstImg = () => {
             ).then((response) => {
                 setMagnitudeFirstURL(response.data.mag_img_url)
                 setphaseFirstURL(response.data.phase_img_url)
-                console.log(response)
+                //console.log(response)
                 if (firstFileBinary === 1 && secondFileBinary === 1) {
                     axios.post('/select',
                         {
@@ -98,22 +106,22 @@ const CropFirstImg = () => {
                             "flag": checkMerge,
                         }
                     ).then((response) => {
-                        console.log(response)
+                        //console.log(response)
                         setResultURL(response.data.mag_img_url)
                     }).catch((err) => {
-                        console.log(err)
+                        //console.log(err)
                     })
                 }
             }).catch((err) => {
-                console.log(err)
+                //console.log(err)
             })
-            console.log(response)
+            //console.log(response)
         }).catch((err) => {
-            console.log(err)
+            //console.log(err)
         })
     }
-    console.log(firstFile);
-    console.log(firstCrop);
+    //console.log(firstFile);
+    //console.log(firstCrop);
 
     const handleButtonClick = () => {
         inputFile.current.click();
@@ -131,7 +139,7 @@ const CropFirstImg = () => {
         setCheckMode(!checkMode)
     }
 
-    console.log(checkMode);
+    //console.log(checkMode);
 
     return (
         <div className='first-image-container'>
@@ -187,10 +195,10 @@ const CropFirstImg = () => {
                                         "flag": checkMerge,
                                     }
                                 ).then((response) => {
-                                    console.log(response)
+                                    //console.log(response)
                                     setResultURL(response.data.mag_img_url)
                                 }).catch((err) => {
-                                    console.log(err)
+                                    //console.log(err)
                                 })
                             }}>
                             <img style={{ width: originalFirstURL !== null ? "auto" : "auto", height: originalFirstURL !== null ? "40vh" : "auto", marginTop: "auto", marginBottom: "auto" }} src={originalFirstURL} />

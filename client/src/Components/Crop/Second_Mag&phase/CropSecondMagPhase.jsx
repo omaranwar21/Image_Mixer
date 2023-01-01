@@ -53,10 +53,10 @@ const CropSecondMagPhase = () => {
         "flag": !checkMerge,
       }
       ).then((response) => {
-      console.log(response)
+      //console.log(response)
       setResultURL(response.data.mag_img_url)
     }).catch((err) => {
-      console.log(err)
+      //console.log(err)
     })
   }
   setBtnFlag(0)
@@ -79,15 +79,15 @@ const CropSecondMagPhase = () => {
         "flag": !checkMerge,
       }
       ).then((response) => {
-        console.log(response)
+        //console.log(response)
       setResultURL(response.data.mag_img_url)
     }).catch((err) => {
-      console.log(err)
+      //console.log(err)
     })
   }
   setBtnFlag(1)
   }
-  console.log(checkMerge);
+  //console.log(checkMerge);
   
   return (
     <div className='second-mag-phase-container'>
@@ -116,15 +116,15 @@ const CropSecondMagPhase = () => {
                         "flag": checkMerge,
                       }
                     ).then((response) => {
-                      console.log(response)
+                      //console.log(response)
                       setResultURL("")
-                      console.log("lol1");
-                      console.log(resultURL);
+                      //console.log("lol1");
+                      //console.log(resultURL);
                       setResultURL(response.data.mag_img_url)
-                      console.log("lol2");
-                      console.log(resultURL);
+                      //console.log("lol2");
+                      //console.log(resultURL);
                     }).catch((err) => {
-                      console.log(err)
+                      //console.log(err)
                     })
                   }}>
                   <img style={{ width: originalSecondURL !== null ? view : view, height: originalSecondURL !== null ? view : view, display: secondFile === undefined ? "none" : null }} src={magnitudeSecondURL} />
@@ -155,10 +155,10 @@ const CropSecondMagPhase = () => {
                         "flag": checkMerge,
                       }
                     ).then((response) => {
-                      console.log(response)
+                      //console.log(response)
                       setResultURL(response.data.mag_img_url)
                     }).catch((err) => {
-                      console.log(err)
+                      //console.log(err)
                     })
                   }}>
                   <img style={{ width: originalSecondURL !== null ? view : view, height: originalSecondURL !== null ? view : view, display: secondFile === undefined ? "none" : null }} src={phaseSecondURL} />

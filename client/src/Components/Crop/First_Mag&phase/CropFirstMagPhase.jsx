@@ -53,10 +53,10 @@ const CropFirstMagPhase = () => {
         "flag": !checkMerge,
       }
       ).then((response) => {
-      console.log(response)
+      //console.log(response)
       setResultURL(response.data.mag_img_url)
     }).catch((err) => {
-      console.log(err)
+      //console.log(err)
     })
   }
   setBtnFlag(0)
@@ -79,16 +79,16 @@ const CropFirstMagPhase = () => {
         "flag": !checkMerge,
       }
       ).then((response) => {
-        console.log(response)
+        //console.log(response)
         setResultURL(response.data.mag_img_url)
       }).catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
     }
     setBtnFlag(1)
   }
 
-  console.log(checkMerge);
+  //console.log(checkMerge);
 
   return (
     <div className='first-mag-phase-container'>
@@ -117,11 +117,11 @@ const CropFirstMagPhase = () => {
                         "flag": checkMerge,
                       }
                     ).then((response) => {
-                      console.log(response)
+                      //console.log(response)
                       setResultURL(response.data.mag_img_url)
                       setCheckMerge(1)
                     }).catch((err) => {
-                      console.log(err)
+                      //console.log(err)
                     })
                   }}>
                   <img style={{ width: originalFirstURL !== null ? view : view, height: originalFirstURL !== null ? view : view, display: firstFile === undefined ? "none" : null }} src={magnitudeFirstURL} />
@@ -152,15 +152,15 @@ const CropFirstMagPhase = () => {
                         "flag": checkMerge,
                       }
                     ).then((response) => {
-                      console.log(response)
+                      //console.log(response)
                       // setResultURL("")
-                      // console.log("lol1");
-                      console.log(resultURL);
+                      // //console.log("lol1");
+                      //console.log(resultURL);
                       setResultURL(response.data.mag_img_url)
-                      // console.log("lol2");
-                      // console.log(resultURL);
+                      // //console.log("lol2");
+                      // //console.log(resultURL);
                     }).catch((err) => {
-                      console.log(err)
+                      //console.log(err)
                     })
                   }}>
                   <img style={{ width: originalFirstURL !== null ? view : view, height: originalFirstURL !== null ? view : view, display: firstFile === undefined ? "none" : null }} src={phaseFirstURL} />

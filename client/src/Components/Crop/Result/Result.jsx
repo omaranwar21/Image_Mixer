@@ -6,7 +6,9 @@ const Result = () => {
 
     const {
         resultURL,
-        setResultURL
+        setResultURL,
+        firstFile,
+        secondFile,
       } = useContext(FileContext);
     
   return (

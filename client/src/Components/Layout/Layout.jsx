@@ -13,25 +13,25 @@ const Layout = () => {
   return (
     <Container fluid>
         <Row>
-            <Col md={8} style={{height:"100vh"}}>
+            <Col xs={12} sm={12} md={8} style={{height:"100vh"}}>
               <Row>
-                <Col md={6} style={{height:"50vh"}} >
+                <Col xs={12} sm={12} md={6} style={{height:"50vh"}} >
                   <CropFirstImg/>
                 </Col>
-                <Col md={6} style={{height:"50vh"}} >
+                <Col xs={12} sm={12} md={6} style={{height:"50vh"}} >
                   <CropFirstMagPhase/>
                 </Col>
               </Row>
               <Row>
-                <Col md={6} style={{height:"50vh"}} >
+                <Col xs={12} sm={12} md={6} style={{height:"50vh"}} >
                   <CropSecondImg/>
                 </Col>
-                <Col md={6} style={{height:"50vh"}} >
+                <Col xs={12} sm={12} md={6} style={{height:"50vh"}} >
                   <CropSecondMagPhase/>
                 </Col>
               </Row>
             </Col>
-            <Col md={4} style={{height:"100vh"}}>
+            <Col xs={12} sm={12} md={4} style={{height:"100vh"}}>
               <Result/>
             </Col>
         </Row>
