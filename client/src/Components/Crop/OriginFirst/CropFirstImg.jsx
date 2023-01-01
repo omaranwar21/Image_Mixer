@@ -148,11 +148,12 @@ const CropFirstImg = () => {
                     </div>
                     <div className='switch'>
                         <BootstrapSwitchButton
+                            className = "custom-btn"
                             checked={checkMode}
                             onlabel='Orignal'
-                            onstyle='danger'
+                            onstyle='primary'
                             offlabel='Phase/Magnitude'
-                            offstyle='success'
+                            offstyle='danger'
                             style='w-1000 mx-2'
                             onChange={(e) => {
                                 setCheckMode(!checkMode)
