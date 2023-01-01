@@ -33,8 +33,9 @@ const CropSecondMagPhase = () => {
     resultURL,
     setResultURL
   } = useContext(FileContext);
-
+  
   const handleClick1 = () => {
+    setCheckMerge(1)
     axios.post('/select',
       {
         "fid": originalFirstImgId,
@@ -54,10 +55,10 @@ const CropSecondMagPhase = () => {
     }).catch((err) => {
       console.log(err)
     })
-    setCheckMerge(1)
   }
 
   const handleClick2 = () => {
+    setCheckMerge(0)
     axios.post('/select',
       {
         "fid": originalFirstImgId,
@@ -77,7 +78,6 @@ const CropSecondMagPhase = () => {
     }).catch((err) => {
       console.log(err)
     })
-    setCheckMerge(0)
   }
   console.log(checkMerge);
 
