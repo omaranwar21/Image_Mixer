@@ -89,18 +89,19 @@ def select():
 
         # processing.crop_2d_img(
         #     0, [0,1, 0, 0, 1], data['x'], data['y'], data['width'], data['height'])
-        return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=result"+str(processing.counter.resultId), "data": data}
+        return {"result_url": "http://127.0.0.1:5000/api/img?img=result"+str(processing.counter.resultId), "data": data}
 
 
-@app.route('/api/construct', methods=['GET', 'POST'])
+@app.route('/api/gray', methods=['GET', 'POST'])
 def construct():
-    # if request.method == 'GET':
-    #     if len(processing.db.magnitude) == 0 or len(processing.db.angle) == 0:
-    #         return {"Error": "No magnitude or phase found!"}, 404
-    #     magId = str(request.args.get('magId'))
-    #     phaseId = str(request.args.get('phaseId'))
-    #     mag = processing.db.magnitude['mag'+str(magId)]
-    #     phase = processing.db.angle['angle'+str(phaseId)]
-    #     processing.construct_image(mag, phase,1)
+    if request.method == 'GET':
+        if len(processing.db.fft_images) == 0:
+            return {"Error": "No data found!"}, 404
 
-    return {'result_url': 'http://127.0.0.1:5000/api/img?img=result'}
+        imgId = str(request.args.get('imgId'))
+        print(imgId)
+        image = processing.db.fft_images[imgId]
+        grayImage = image.image
+        cv2.imwrite('../backend/files/images/gray.png', grayImage)
+
+    return {'gray_url': 'http://127.0.0.1:5000/api/img?img=gray'}

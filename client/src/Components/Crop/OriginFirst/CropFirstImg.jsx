@@ -73,6 +73,18 @@ const CropFirstImg = () => {
         }
     }, [originalFirstURL,originalSecondURL])
 
+    useEffect(() => {
+        if (originalFirstURL === null && originalSecondURL !== null) {
+            axios.get(`/gray?imgId=${originalSecondImgId}`)
+            .then((res) => {
+                console.log(res);
+                setResultURL(res.data.gray_url)
+            })
+            .catch((err)=> {
+                console.log(err);
+            })
+        }
+    }, [originalFirstURL])
 
 
     const handleFileFirstUpload = (e) => {
@@ -107,7 +119,7 @@ const CropFirstImg = () => {
                         }
                     ).then((response) => {
                         //console.log(response)
-                        setResultURL(response.data.mag_img_url)
+                        setResultURL(response.data.result_url)
                     }).catch((err) => {
                         //console.log(err)
                     })
@@ -196,7 +208,7 @@ const CropFirstImg = () => {
                                     }
                                 ).then((response) => {
                                     //console.log(response)
-                                    setResultURL(response.data.mag_img_url)
+                                    setResultURL(response.data.result_url)
                                 }).catch((err) => {
                                     //console.log(err)
                                 })

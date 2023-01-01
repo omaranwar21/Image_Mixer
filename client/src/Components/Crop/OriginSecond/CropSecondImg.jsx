@@ -52,6 +52,20 @@ const CropSecondImg = () => {
         }
     }, [secondFile])
 
+    useEffect(() => {
+        if (originalSecondURL === null && originalFirstURL !== null) {
+            axios.get(`/gray?imgId=${originalFirstImgId}`)
+            .then((res) => {
+                console.log(res);
+                setResultURL(res.data.gray_url)
+            })
+            .catch((err)=> {
+                console.log(err);
+            })
+        }
+    }, [originalSecondURL])
+
+
     //console.log(secondFileBinary);
 
     const onFileSecondUpload = (e) => {
@@ -86,7 +100,7 @@ const CropSecondImg = () => {
                         }
                     ).then((response) => {
                         //console.log(response)
-                        setResultURL(response.data.mag_img_url)
+                        setResultURL(response.data.result_url)
                     }).catch((err) => {
                         //console.log(err)
                     })
@@ -153,7 +167,7 @@ const CropSecondImg = () => {
                                     }
                                 ).then((response) => {
                                     //console.log(response)
-                                    setResultURL(response.data.mag_img_url)
+                                    setResultURL(response.data.result_url)
                                 }).catch((err) => {
                                     //console.log(err)
                                 })

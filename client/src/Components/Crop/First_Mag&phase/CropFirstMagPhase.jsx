@@ -54,7 +54,7 @@ const CropFirstMagPhase = () => {
       }
       ).then((response) => {
       //console.log(response)
-      setResultURL(response.data.mag_img_url)
+      setResultURL(response.data.result_url)
     }).catch((err) => {
       //console.log(err)
     })
@@ -80,7 +80,7 @@ const CropFirstMagPhase = () => {
       }
       ).then((response) => {
         //console.log(response)
-        setResultURL(response.data.mag_img_url)
+        setResultURL(response.data.result_url)
       }).catch((err) => {
         //console.log(err)
       })
@@ -118,7 +118,7 @@ const CropFirstMagPhase = () => {
                       }
                     ).then((response) => {
                       //console.log(response)
-                      setResultURL(response.data.mag_img_url)
+                      setResultURL(response.data.result_url)
                       setCheckMerge(1)
                     }).catch((err) => {
                       //console.log(err)
@@ -156,7 +156,7 @@ const CropFirstMagPhase = () => {
                       // setResultURL("")
                       // //console.log("lol1");
                       //console.log(resultURL);
-                      setResultURL(response.data.mag_img_url)
+                      setResultURL(response.data.result_url)
                       // //console.log("lol2");
                       // //console.log(resultURL);
                     }).catch((err) => {
