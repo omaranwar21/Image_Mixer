@@ -68,7 +68,7 @@ def select():
         f_image = processing.db.fft_images[str(data['fid'])]  # first image
         s_image = processing.db.fft_images[str(data['sid'])]  # second image
 
-        if data['mode']:  # crop magnitude or phase
+        if data['mode']:  # crop from the orginal image
             fcroped_image = f_image.crop_2d(data['firstCrop'])
             f_mag, f_angle = processing.magnitude_angle(fcroped_image)
 
@@ -79,7 +79,7 @@ def select():
                 processing.construct_image(f_mag, s_angle, 0)
             else:  # 1st phase, 2nd mag
                 processing.construct_image(s_mag, f_angle, 0)
-        else:  # crop from the orginal image
+        else:  # crop magnitude or phase
             if data['flag']:  # 1st mag, 2nd phase
                 processing.construct_image(f_image.magnitude, s_image.angle,
                                            cropMag=data['magFirstCrop'], cropPhase=data['phaseSecondCrop'])
