@@ -31,12 +31,15 @@ const CropSecondMagPhase = () => {
     checkModeBinary,
     setCheckModeBinary,
     resultURL,
-    setResultURL
+    setResultURL,
+    btnFlag,
+    setBtnFlag
   } = useContext(FileContext);
   
   const handleClick1 = () => {
-    setCheckMerge(1)
-    axios.post('/select',
+    if (btnFlag === 1) {
+      setCheckMerge(1)
+      axios.post('/select',
       {
         "fid": originalFirstImgId,
         "firstCrop": firstCrop,
@@ -47,19 +50,22 @@ const CropSecondMagPhase = () => {
         "magSecondCrop": magSecondCrop,
         "phaseSecondCrop": phaseSecondCrop,
         "mode": checkModeBinary,
-        "flag": checkMerge,
+        "flag": !checkMerge,
       }
-    ).then((response) => {
+      ).then((response) => {
       console.log(response)
       setResultURL(response.data.mag_img_url)
     }).catch((err) => {
       console.log(err)
     })
   }
-
+  setBtnFlag(0)
+  }
+  
   const handleClick2 = () => {
-    setCheckMerge(0)
-    axios.post('/select',
+    if (btnFlag === 0) {
+      setCheckMerge(0)
+      axios.post('/select',
       {
         "fid": originalFirstImgId,
         "firstCrop": firstCrop,
@@ -70,17 +76,19 @@ const CropSecondMagPhase = () => {
         "magSecondCrop": magSecondCrop,
         "phaseSecondCrop": phaseSecondCrop,
         "mode": checkModeBinary,
-        "flag": checkMerge,
+        "flag": !checkMerge,
       }
-    ).then((response) => {
-      console.log(response)
+      ).then((response) => {
+        console.log(response)
       setResultURL(response.data.mag_img_url)
     }).catch((err) => {
       console.log(err)
     })
+  }
+  setBtnFlag(1)
   }
   console.log(checkMerge);
-
+  
   return (
     <div className='second-mag-phase-container'>
       <div className='second-mag-phase-2ndcontainer'>

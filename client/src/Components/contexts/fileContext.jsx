@@ -78,6 +78,7 @@ const FileContextProvider = ({ children }) => {
     const [checkModeBinary,setCheckModeBinary] = useState();
     // result 
     const [resultURL, setResultURL] = useState()
+    const [btnFlag, setBtnFlag] = useState(0)
 
     return (
         <FileContext.Provider
@@ -125,7 +126,9 @@ const FileContextProvider = ({ children }) => {
                 firstFileBinary,
                 setFirstFileBinary,
                 secondFileBinary,
-                setSecondFileBinary
+                setSecondFileBinary,
+                btnFlag,
+                setBtnFlag
             }}>
             {children}
         </FileContext.Provider>
