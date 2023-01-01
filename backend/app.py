@@ -3,7 +3,7 @@ from flask_cors import CORS
 import os.path
 
 
-import processing 
+import processing
 from image import *
 from fft_image import *
 
@@ -29,12 +29,17 @@ def img():
         if "Img" not in request.files:
             return {"Error": 'File Not Found'}, 404
 
+        flag = 1
+
         imageFile = request.files["Img"]
         imgId = str(processing.counter.imgId)
         fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
         imageFile.save(fullPath)
 
-        image = Image(imgId, fullPath)
+        gray = request.args.get('gray')
+        if gray:
+            flag = 0
+        image = Image(imgId, fullPath, flag=flag)
         cv2.imwrite(fullPath, image.image)
 
         # processing.resize_image(fullPath)
@@ -57,7 +62,7 @@ def combImgs():
 @app.route('/api/select', methods=['GET', 'POST'])
 def select():
     if request.method == 'POST':
-        processing.counter.resultId +=1
+        processing.counter.resultId += 1
         data = request.get_json()
         print(data)
         f_image = processing.db.fft_images[str(data['fid'])]  # first image
@@ -69,7 +74,7 @@ def select():
 
             scroped_image = s_image.crop_2d(data['secondCrop'])
             s_mag, s_angle = processing.magnitude_angle(scroped_image)
-            
+
             if data['flag']:  # 1st mag, 2nd phase
                 processing.construct_image(f_mag, s_angle, 0)
             else:  # 1st phase, 2nd mag
@@ -77,14 +82,14 @@ def select():
         else:  # crop from the orginal image
             if data['flag']:  # 1st mag, 2nd phase
                 processing.construct_image(f_image.magnitude, s_image.angle,
-                                cropMag=data['magFirstCrop'], cropPhase=data['phaseSecondCrop'])
+                                           cropMag=data['magFirstCrop'], cropPhase=data['phaseSecondCrop'])
             else:  # 1st phase, 2nd mag
                 processing.construct_image(s_image.magnitude, f_image.angle,
-                                cropMag=data['magSecondCrop'], cropPhase=data['phaseFirstCrop'])
+                                           cropMag=data['magSecondCrop'], cropPhase=data['phaseFirstCrop'])
 
         # processing.crop_2d_img(
         #     0, [0,1, 0, 0, 1], data['x'], data['y'], data['width'], data['height'])
-        return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=result"+str(processing.counter.resultId),"data": data}
+        return {"mag_img_url": "http://127.0.0.1:5000/api/img?img=result"+str(processing.counter.resultId), "data": data}
 
 
 @app.route('/api/construct', methods=['GET', 'POST'])
