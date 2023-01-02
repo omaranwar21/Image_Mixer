@@ -19,6 +19,7 @@ const CropFirstImg = () => {
         setFirstFile,
         checkMode,
         setCheckMode,
+        magnitudeSecondURL,
         magnitudeFirstURL,
         setMagnitudeFirstURL,
         phaseFirstURL,
@@ -55,7 +56,6 @@ const CropFirstImg = () => {
         }
     }, [checkMode])
 
-    //console.log(checkModeBinary);
 
     useEffect(() => {
         if (firstFile !== undefined) {
@@ -65,13 +65,37 @@ const CropFirstImg = () => {
         }
     }, [firstFile])
 
-    //console.log(firstFileBinary);
 
     useEffect(() => {
         if (originalFirstURL === null && originalSecondURL === null) {
             setResultURL(undefined)
         }
     }, [originalFirstURL,originalSecondURL])
+
+    useEffect(() => {
+        if (magnitudeFirstURL !== null && magnitudeSecondURL !== null) {
+            axios.post('/select',
+                {
+                    "fid": originalFirstImgId,
+                    "firstCrop": firstCrop,
+                    "sid": originalSecondImgId,
+                    "secondCrop": secondCrop,
+                    "magFirstCrop": magFirstCrop,
+                    "phaseFirstCrop": phaseFirstCrop,
+                    "magSecondCrop": magSecondCrop,
+                    "phaseSecondCrop": phaseSecondCrop,
+                    "mode": checkModeBinary,
+                    "flag": checkMerge,
+                }
+            ).then((response) => {
+                console.log(response)
+                setResultURL(response.data.result_url)
+            }).catch((err) => {
+                console.log(err)
+            })
+        
+        }
+    }, [magnitudeFirstURL,magnitudeSecondURL])
 
     useEffect(() => {
         if (originalFirstURL === null && originalSecondURL !== null) {
@@ -102,38 +126,15 @@ const CropFirstImg = () => {
             ).then((response) => {
                 setMagnitudeFirstURL(response.data.mag_img_url)
                 setphaseFirstURL(response.data.phase_img_url)
-                //console.log(response)
-                if (firstFileBinary === 1 && secondFileBinary === 1) {
-                    axios.post('/select',
-                        {
-                            "fid": originalFirstImgId,
-                            "firstCrop": firstCrop,
-                            "sid": originalSecondImgId,
-                            "secondCrop": secondCrop,
-                            "magFirstCrop": magFirstCrop,
-                            "phaseFirstCrop": phaseFirstCrop,
-                            "magSecondCrop": magSecondCrop,
-                            "phaseSecondCrop": phaseSecondCrop,
-                            "mode": checkModeBinary,
-                            "flag": checkMerge,
-                        }
-                    ).then((response) => {
-                        //console.log(response)
-                        setResultURL(response.data.result_url)
-                    }).catch((err) => {
-                        //console.log(err)
-                    })
-                }
+                console.log(response)        
             }).catch((err) => {
-                //console.log(err)
+                console.log(err)
             })
-            //console.log(response)
+            console.log(response)
         }).catch((err) => {
-            //console.log(err)
+            console.log(err)
         })
     }
-    //console.log(firstFile);
-    //console.log(firstCrop);
 
     const handleButtonClick = () => {
         inputFile.current.click();
@@ -151,7 +152,6 @@ const CropFirstImg = () => {
         setCheckMode(!checkMode)
     }
 
-    //console.log(checkMode);
 
     return (
         <div className='first-image-container'>

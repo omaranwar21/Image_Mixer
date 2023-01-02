@@ -10,28 +10,12 @@ matplotlib.use('Agg')
 
 
 class counter:
-    resultId= 0
+    resultId = 0
     imgId = 0
 
 
 class db:
     fft_images = {}
-
-# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
-#   Arguments: Images paths
-#   Packages used : CV2 package for reading an image : returns a numpy array of the image in shape (height, width, 3"BGR")
-#   Functions called: magnitude_phase (user defined function returns the magnitude and phase respectively of an image passed)
-#   return: magnitudes, phases of the first and second images respectively.
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-def fourier_2D(image_path):
-    image = resize_image(image_path, 0)
-    # calling user defined function to get magnitude and phase of the first image
-    image_magnitude, image_angle = magnitude_angle(image)
-
-    return image_magnitude, image_angle
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: Image
@@ -54,49 +38,6 @@ def magnitude_angle(image):
 
 
 # ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
-#   Arguments: Images path
-#   Packages used : CV2 package for reading and writing the image : returns a numpy array of the image in shape (height, width, 3"BGR"),
-#                   matplot.plotly for rendering the image and save it in the given path
-#   Functions called: plot the magnitude & the phase and save it in the given path
-#   return: void
-#------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-def plot_magnitude_phase(mag, angle):
-    phase = np.exp(1j*angle)
-    db.magnitude['mag'+str(counter.imgId)] = mag
-    db.angle['angle'+str(counter.imgId)] = angle
-    inverse_mag = np.fft.ifft2(mag)
-    inverse_phase = np.fft.ifft2(phase)
-    plt.axis('off')
-    plt.imshow(np.abs(np.log(inverse_mag)), cmap="gray")
-    plt.savefig('./files/images/mag'+str(counter.imgId), bbox_inches='tight')
-    plt.clf()
-    plt.axis('off')
-    plt.imshow(np.abs(np.log(inverse_phase)), cmap="gray")
-    plt.savefig('./files/images/phase'+str(counter.imgId), bbox_inches='tight',pad_inches = 0)
-#------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
-#   Arguments: Images path
-#   Packages used : CV2 package for reading and writing the image : returns a numpy array of the image in shape (height, width, 3"BGR")
-#   Functions called: resize the image and save it in the same path
-#   return: void
-#------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-def resize_image(image_path, flag=1):
-    if flag:
-        image = cv2.imread(image_path)
-    else:
-        image = cv2.imread(image_path, flag)
-    image = cv2.resize(image, dsize=(1400, 1400))
-    cv2.imwrite(image_path, image)
-
-    return image
-#------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-# ------------------------------------------------------------------ Function description ------------------------------------------------------------------#
 #   Arguments: magnitude and phase of the needed constructed image
 #       Packages used : numpy package for multiplying the magnitude and phase : returns a numpy array of the image in shape
 #                       take the real part of the series inversed to get the image constructed.
@@ -104,18 +45,17 @@ def resize_image(image_path, flag=1):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def construct_image(magnitude, angle,mode =1,**kwargs):
+def construct_image(magnitude, angle, mode=1, **kwargs):
     flag = 0
     if mode:
         cropMag = kwargs['cropMag']
         cropPhase = kwargs['cropPhase']
-        magnitude = crop_2d_img(magnitude,cropMag)
-        angle = crop_2d_img(angle,cropPhase)
+        magnitude = crop_2d_img(magnitude, cropMag)
+        angle = crop_2d_img(angle, cropPhase)
         if(cropPhase['height'] != 0 and cropPhase['width'] != 0):
             flag = 1
 
-
-    combined = np.multiply(magnitude, np.exp(np.multiply(1j,angle)))
+    combined = np.multiply(magnitude, np.exp(np.multiply(1j, angle)))
     combined = np.fft.ifftshift(combined)
     image_combined = np.abs(np.fft.ifft2(combined))
     if flag:
@@ -126,7 +66,7 @@ def construct_image(magnitude, angle,mode =1,**kwargs):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def crop_2d_img(image,data):
+def crop_2d_img(image, data):
     if(data['height'] == 0 and data['width'] == 0):
         return image
 

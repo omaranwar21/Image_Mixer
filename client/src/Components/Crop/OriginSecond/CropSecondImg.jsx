@@ -66,8 +66,6 @@ const CropSecondImg = () => {
     }, [originalSecondURL])
 
 
-    //console.log(secondFileBinary);
-
     const onFileSecondUpload = (e) => {
         setSecondFile(URL.createObjectURL(e.target.files[0]));
         const formData = new FormData();
@@ -83,38 +81,15 @@ const CropSecondImg = () => {
             ).then((response) => {
                 setMagnitudeSecondURL(response.data.mag_img_url)
                 setphaseSecondURL(response.data.phase_img_url)
-                //console.log(response)
-                if (firstFileBinary === 1 && secondFileBinary === 1) {
-                    axios.post('/select',
-                        {
-                            "fid": originalFirstImgId,
-                            "firstCrop": firstCrop,
-                            "sid": originalSecondImgId,
-                            "secondCrop": secondCrop,
-                            "magFirstCrop": magFirstCrop,
-                            "phaseFirstCrop": phaseFirstCrop,
-                            "magSecondCrop": magSecondCrop,
-                            "phaseSecondCrop": phaseSecondCrop,
-                            "mode": checkModeBinary,
-                            "flag": checkMerge,
-                        }
-                    ).then((response) => {
-                        //console.log(response)
-                        setResultURL(response.data.result_url)
-                    }).catch((err) => {
-                        //console.log(err)
-                    })
-                }
+                console.log(response)
             }).catch((err) => {
-                //console.log(err)
+                console.log(err)
             })
-            //console.log(response)
+            console.log(response)
         }).catch((err) => {
-            //console.log(err)
+            console.log(err)
         })
     }
-    //console.log(secondFile);
-    //console.log(secondCrop);
 
     const handleButtonClick = () => {
         inputFile.current.click();
