@@ -45,8 +45,23 @@ const CropFirstImg = () => {
         secondFileBinary,
         setSecondFileBinary,
         secondFile,
-        originalSecondURL
-    } = useContext(FileContext);
+        originalSecondURL,
+        passMode,
+        setPassMode,
+        setSecondCrop,
+        setMagFirstCrop,
+        setPhaseFirstCrop,
+        setMagSecondCrop,
+        setPhaseSecondCrop,
+        } = useContext(FileContext);
+
+    const reset = {
+            unit: '%', // Can be 'px' or '%'
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0
+    }
 
     useEffect(() => {
         if (checkMode === false) {
@@ -159,12 +174,19 @@ const CropFirstImg = () => {
         setphaseFirstURL(undefined)
         setOriginalFirstImgId(null)
         setFirstFile(undefined)
+        setFirstCrop(reset)
+        setSecondCrop(reset)
+        setMagFirstCrop(reset)
+        setPhaseFirstCrop(reset)
+        setMagSecondCrop(reset)
+        setPhaseSecondCrop(reset)
         inputFile.current.value = null
     }
 
     const handleSelectClick = () => {
         setCheckMode(!checkMode)
     }
+    console.log(passMode);
 
 
     return (
@@ -205,7 +227,11 @@ const CropFirstImg = () => {
                 </div>
                 <div className='image'>
                     {checkMode === true ? (
-                        <ReactCrop crop={firstCrop} onChange={(c, per) => setFirstCrop(per)}
+                        <ReactCrop style={{
+                            boxShadow : passMode === false ? null : "0 0 0 9999em rgb(0 0 0 / 0%) !important" , 
+                            backgroundColor:passMode === false ? "rgb(0 0 0 / 0%)" : "rgb(0 0 0 / 50%) !important"
+                        }} 
+                        crop={firstCrop} onChange={(c, per) => setFirstCrop(per)}
                             onComplete={(px, percent) => {
                                 axios.post('/select',
                                     {

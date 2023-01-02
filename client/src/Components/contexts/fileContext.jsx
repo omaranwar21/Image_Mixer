@@ -79,6 +79,7 @@ const FileContextProvider = ({ children }) => {
     const [btnFlag, setBtnFlag] = useState(0)
     // result 
     const [resultURL, setResultURL] = useState()
+    const [passMode, setPassMode] = useState(false)
 
     return (
         <FileContext.Provider
@@ -128,7 +129,9 @@ const FileContextProvider = ({ children }) => {
                 secondFileBinary,
                 setSecondFileBinary,
                 btnFlag,
-                setBtnFlag
+                setBtnFlag,
+                passMode,
+                setPassMode
             }}>
             {children}
         </FileContext.Provider>

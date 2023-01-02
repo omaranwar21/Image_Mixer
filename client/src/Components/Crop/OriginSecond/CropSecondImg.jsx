@@ -42,8 +42,21 @@ const CropSecondImg = () => {
         firstFileBinary,
         setFirstFileBinary,
         firstFile,
-        originalFirstURL
+        originalFirstURL,
+        setFirstCrop,
+        setMagFirstCrop,
+        setPhaseFirstCrop,
+        setMagSecondCrop,
+        setPhaseSecondCrop,
     } = useContext(FileContext);
+
+    const reset = {
+        unit: '%', // Can be 'px' or '%'
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+    }
 
     useEffect(() => {
         if (secondFile !== undefined) {
@@ -56,13 +69,13 @@ const CropSecondImg = () => {
     useEffect(() => {
         if (originalSecondURL === undefined && originalFirstURL !== undefined) {
             axios.get(`/gray?imgId=${originalFirstImgId}`)
-            .then((res) => {
-                console.log(res);
-                setResultURL(res.data.gray_url)
-            })
-            .catch((err)=> {
-                console.log(err);
-            })
+                .then((res) => {
+                    console.log(res);
+                    setResultURL(res.data.gray_url)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
     }, [originalSecondURL])
 
@@ -114,6 +127,12 @@ const CropSecondImg = () => {
         setphaseSecondURL(undefined)
         setOriginalSecondImgId(null)
         setSecondFile(undefined)
+        setFirstCrop(reset)
+        setSecondCrop(reset)
+        setMagFirstCrop(reset)
+        setPhaseFirstCrop(reset)
+        setMagSecondCrop(reset)
+        setPhaseSecondCrop(reset)
         inputFile.current.value = null
     }
 

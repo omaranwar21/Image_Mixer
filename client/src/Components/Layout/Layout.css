@@ -2,3 +2,10 @@
 .ReactCrop{
     height: 100% !important;
 }
+
+
+
+/* .ReactCrop__crop-selection{
+    box-shadow: 0 0 0 9999em rgb(0 0 0 / 0%) !important;
+    background-color: rgb(0 0 0 / 50%) !important;
+} */
