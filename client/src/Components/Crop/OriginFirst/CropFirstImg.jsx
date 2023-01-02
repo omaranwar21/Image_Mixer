@@ -53,6 +53,8 @@ const CropFirstImg = () => {
         setPhaseFirstCrop,
         setMagSecondCrop,
         setPhaseSecondCrop,
+        passModeBinary,
+    setPassModeBinary
         } = useContext(FileContext);
 
     const reset = {
@@ -90,18 +92,19 @@ const CropFirstImg = () => {
     useEffect(() => {
         if (magnitudeFirstURL !== undefined && magnitudeSecondURL !== undefined) {
             axios.post('/select',
-                {
-                    "fid": originalFirstImgId,
-                    "firstCrop": firstCrop,
-                    "sid": originalSecondImgId,
-                    "secondCrop": secondCrop,
-                    "magFirstCrop": magFirstCrop,
-                    "phaseFirstCrop": phaseFirstCrop,
-                    "magSecondCrop": magSecondCrop,
-                    "phaseSecondCrop": phaseSecondCrop,
-                    "mode": checkModeBinary,
-                    "flag": checkMerge,
-                }
+            {
+                "fid": originalFirstImgId,
+                "firstCrop": firstCrop,
+                "sid": originalSecondImgId,
+                "secondCrop": secondCrop,
+                "magFirstCrop": magFirstCrop,
+                "phaseFirstCrop": phaseFirstCrop,
+                "magSecondCrop": magSecondCrop,
+                "phaseSecondCrop": phaseSecondCrop,
+                "mode": checkModeBinary,
+                "flag": !checkMerge,
+                "filter": passModeBinary
+              }
             ).then((response) => {
                 console.log(response)
                 setResultURL(response.data.result_url)
@@ -234,18 +237,19 @@ const CropFirstImg = () => {
                         crop={firstCrop} onChange={(c, per) => setFirstCrop(per)}
                             onComplete={(px, percent) => {
                                 axios.post('/select',
-                                    {
-                                        "fid": originalFirstImgId,
-                                        "firstCrop": firstCrop,
-                                        "sid": originalSecondImgId,
-                                        "secondCrop": secondCrop,
-                                        "magFirstCrop": magFirstCrop,
-                                        "phaseFirstCrop": phaseFirstCrop,
-                                        "magSecondCrop": magSecondCrop,
-                                        "phaseSecondCrop": phaseSecondCrop,
-                                        "mode": checkModeBinary,
-                                        "flag": checkMerge,
-                                    }
+                                {
+                                    "fid": originalFirstImgId,
+                                    "firstCrop": firstCrop,
+                                    "sid": originalSecondImgId,
+                                    "secondCrop": secondCrop,
+                                    "magFirstCrop": magFirstCrop,
+                                    "phaseFirstCrop": phaseFirstCrop,
+                                    "magSecondCrop": magSecondCrop,
+                                    "phaseSecondCrop": phaseSecondCrop,
+                                    "mode": checkModeBinary,
+                                    "flag": !checkMerge,
+                                    "filter": passModeBinary
+                                  }
                                 ).then((response) => {
                                     //console.log(response)
                                     setResultURL(response.data.result_url)

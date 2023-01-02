@@ -14,16 +14,18 @@ const Result = () => {
     firstFile,
     secondFile,
     checkMode,
-    setCheckMode
+    setCheckMode,
+    passModeBinary,
+    setPassModeBinary
   } = useContext(FileContext);
   
-  // useEffect(() => {
-  //   if (pathMode === 0) {
-  //     setPathMode(0)
-  //   } else {
-  //     setPathMode(1)
-  //   }
-  // }, [pathMode])
+  useEffect(() => {
+    if (passMode === false) {
+      setPassModeBinary(0)
+    } else {
+      setPassModeBinary(1)
+    }
+  }, [passMode])
 
   return (
     <div className='result'>
