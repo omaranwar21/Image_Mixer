@@ -95,6 +95,7 @@ def select():
 @app.route('/api/gray', methods=['GET', 'POST'])
 def construct():
     if request.method == 'GET':
+        processing.counter.resultId += 1
         if len(processing.db.fft_images) == 0:
             return {"Error": "No data found!"}, 404
 
@@ -102,6 +103,6 @@ def construct():
         print(imgId)
         image = processing.db.fft_images[imgId]
         grayImage = image.image
-        cv2.imwrite('../backend/files/images/gray.png', grayImage)
+        cv2.imwrite('../backend/files/images/gray.png'+str(processing.counter.resultId), grayImage)
 
     return {'gray_url': 'http://127.0.0.1:5000/api/img?img=gray'}
