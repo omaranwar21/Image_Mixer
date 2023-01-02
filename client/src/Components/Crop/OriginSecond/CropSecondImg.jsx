@@ -48,6 +48,8 @@ const CropSecondImg = () => {
         setPhaseFirstCrop,
         setMagSecondCrop,
         setPhaseSecondCrop,
+        passModeBinary,
+    setPassModeBinary
     } = useContext(FileContext);
 
     const reset = {
@@ -161,18 +163,19 @@ const CropSecondImg = () => {
                         <ReactCrop crop={secondCrop} onChange={(px, per) => setSecondCrop(per)}
                             onComplete={(px, percent) => {
                                 axios.post('/select',
-                                    {
-                                        "fid": originalFirstImgId,
-                                        "firstCrop": firstCrop,
-                                        "sid": originalSecondImgId,
-                                        "secondCrop": secondCrop,
-                                        "magFirstCrop": magFirstCrop,
-                                        "phaseFirstCrop": phaseFirstCrop,
-                                        "magSecondCrop": magSecondCrop,
-                                        "phaseSecondCrop": phaseSecondCrop,
-                                        "mode": checkModeBinary,
-                                        "flag": checkMerge,
-                                    }
+                                {
+                                    "fid": originalFirstImgId,
+                                    "firstCrop": firstCrop,
+                                    "sid": originalSecondImgId,
+                                    "secondCrop": secondCrop,
+                                    "magFirstCrop": magFirstCrop,
+                                    "phaseFirstCrop": phaseFirstCrop,
+                                    "magSecondCrop": magSecondCrop,
+                                    "phaseSecondCrop": phaseSecondCrop,
+                                    "mode": checkModeBinary,
+                                    "flag": !checkMerge,
+                                    "filter": passModeBinary
+                                  }
                                 ).then((response) => {
                                     //console.log(response)
                                     setResultURL(response.data.result_url)

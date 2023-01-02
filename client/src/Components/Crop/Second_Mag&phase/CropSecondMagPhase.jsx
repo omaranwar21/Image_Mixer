@@ -33,8 +33,12 @@ const CropSecondMagPhase = () => {
     resultURL,
     setResultURL,
     btnFlag,
-    setBtnFlag
+    setBtnFlag,
+    passModeBinary,
+    setPassModeBinary
   } = useContext(FileContext);
+  
+  console.log(passModeBinary);
   
   const handleClick1 = () => {
     if (btnFlag === 1) {
@@ -51,6 +55,7 @@ const CropSecondMagPhase = () => {
         "phaseSecondCrop": phaseSecondCrop,
         "mode": checkModeBinary,
         "flag": !checkMerge,
+        "filter": passModeBinary
       }
       ).then((response) => {
       //console.log(response)
@@ -77,6 +82,7 @@ const CropSecondMagPhase = () => {
         "phaseSecondCrop": phaseSecondCrop,
         "mode": checkModeBinary,
         "flag": !checkMerge,
+        "filter": passModeBinary
       }
       ).then((response) => {
         //console.log(response)
@@ -103,18 +109,19 @@ const CropSecondMagPhase = () => {
                 <ReactCrop crop={magSecondCrop} onChange={(c, per) => setMagSecondCrop(per)}
                   onComplete={(px, percent) => {
                     axios.post('/select',
-                      {
-                        "fid": originalFirstImgId,
-                        "firstCrop": firstCrop,
-                        "sid": originalSecondImgId,
-                        "secondCrop": secondCrop,
-                        "magFirstCrop": magFirstCrop,
-                        "phaseFirstCrop": phaseFirstCrop,
-                        "magSecondCrop": magSecondCrop,
-                        "phaseSecondCrop": phaseSecondCrop,
-                        "mode": checkModeBinary,
-                        "flag": checkMerge,
-                      }
+                    {
+                      "fid": originalFirstImgId,
+                      "firstCrop": firstCrop,
+                      "sid": originalSecondImgId,
+                      "secondCrop": secondCrop,
+                      "magFirstCrop": magFirstCrop,
+                      "phaseFirstCrop": phaseFirstCrop,
+                      "magSecondCrop": magSecondCrop,
+                      "phaseSecondCrop": phaseSecondCrop,
+                      "mode": checkModeBinary,
+                      "flag": !checkMerge,
+                      "filter": passModeBinary
+                    }
                     ).then((response) => {
                       //console.log(response)
                       setResultURL("")
@@ -142,18 +149,19 @@ const CropSecondMagPhase = () => {
                 <ReactCrop crop={phaseSecondCrop} onChange={(c, per) => setPhaseSecondCrop(per)}
                   onComplete={(px, percent) => {
                     axios.post('/select',
-                      {
-                        "fid": originalFirstImgId,
-                        "firstCrop": firstCrop,
-                        "sid": originalSecondImgId,
-                        "secondCrop": secondCrop,
-                        "magFirstCrop": magFirstCrop,
-                        "phaseFirstCrop": phaseFirstCrop,
-                        "magSecondCrop": magSecondCrop,
-                        "phaseSecondCrop": phaseSecondCrop,
-                        "mode": checkModeBinary,
-                        "flag": checkMerge,
-                      }
+                    {
+                      "fid": originalFirstImgId,
+                      "firstCrop": firstCrop,
+                      "sid": originalSecondImgId,
+                      "secondCrop": secondCrop,
+                      "magFirstCrop": magFirstCrop,
+                      "phaseFirstCrop": phaseFirstCrop,
+                      "magSecondCrop": magSecondCrop,
+                      "phaseSecondCrop": phaseSecondCrop,
+                      "mode": checkModeBinary,
+                      "flag": !checkMerge,
+                      "filter": passModeBinary
+                    }
                     ).then((response) => {
                       //console.log(response)
                       setResultURL(response.data.result_url)
