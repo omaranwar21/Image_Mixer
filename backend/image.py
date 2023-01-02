@@ -9,17 +9,24 @@ class Image:
         self.image = cv2.resize(self.image, dsize=(1400, 1400))
         self.id = id
 
-    def crop_2d(self,data):
+    def crop_2d(self,data, filter):
         if(data['height'] == 0 and data['width'] == 0):
             return self.image
 
         coordinates = self.points(data['x'], data['y'], data['width'], data['height'])
-        max_height = self.image.shape[0]-1
-        cutted_img = np.zeros_like(self.image)
+        if filter == 1:
+            cutted_img = np.zeros_like(self.image)
+        else:
+            cutted_img = self.image
+            
 
         for x in range(int(coordinates[0]), int(coordinates[1])):
             for y in range(int(coordinates[2]), int(coordinates[3])):
-                cutted_img[y, x] = self.image[y, x]
+                if filter == 1:
+                    cutted_img[y, x] = self.image[y, x]
+                else:
+                    cutted_img[y, x] = 0
+
         return cutted_img
 
     def points(self,x_percentage, y_percentage, width, height):

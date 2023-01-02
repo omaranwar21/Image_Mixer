@@ -45,13 +45,13 @@ def magnitude_angle(image):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def construct_image(magnitude, angle, mode=1, **kwargs):
+def construct_image(magnitude, angle, filter, mode=1, **kwargs):
     flag = 0
     if mode:
         cropMag = kwargs['cropMag']
         cropPhase = kwargs['cropPhase']
-        magnitude = crop_2d_img(magnitude, cropMag)
-        angle = crop_2d_img(angle, cropPhase)
+        magnitude = crop_2d_img(magnitude, cropMag, filter)
+        angle = crop_2d_img(angle, cropPhase, filter)
         if(cropPhase['height'] != 0 and cropPhase['width'] != 0):
             flag = 1
 
@@ -66,18 +66,23 @@ def construct_image(magnitude, angle, mode=1, **kwargs):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def crop_2d_img(image, data):
+def crop_2d_img(image, data, filter):
     if(data['height'] == 0 and data['width'] == 0):
         return image
 
     coordinates = points(data['x'], data['y'], data['width'], data['height'])
-    cutted_img = np.zeros_like(image)
+    if filter == 1:
+        cutted_img = np.zeros_like(image)
+    else:
+        cutted_img = image
+                
 
     for x in range(int(coordinates[0]), int(coordinates[1])):
         for y in range(int(coordinates[2]), int(coordinates[3])):
-            cutted_img[y, x] = image[y, x]
-
-    cv2.imwrite('./files/cut.png', cutted_img)
+            if filter == 1:
+                cutted_img[y, x] = image[y, x]
+            else:
+                cutted_img[y, x] = 0
     return cutted_img
 
 

@@ -66,6 +66,7 @@ def select():
     if request.method == 'POST':
         processing.counter.resultId += 1
         data = request.get_json()
+        filter = data["filter"]
 
         if len(processing.db.fft_images) == 0:
             return {"Error": "No data found!"}, 404
@@ -76,22 +77,22 @@ def select():
         s_image = processing.db.fft_images[str(data['sid'])]  # second image
 
         if data['mode']:  # crop from the orginal image
-            fcroped_image = f_image.crop_2d(data['firstCrop'])
+            fcroped_image = f_image.crop_2d(data['firstCrop'],filter)
             f_mag, f_angle = processing.magnitude_angle(fcroped_image)
 
-            scroped_image = s_image.crop_2d(data['secondCrop'])
+            scroped_image = s_image.crop_2d(data['secondCrop'],filter)
             s_mag, s_angle = processing.magnitude_angle(scroped_image)
 
             if data['flag']:  # 1st mag, 2nd phase
-                processing.construct_image(f_mag, s_angle, 0)
+                processing.construct_image(f_mag, s_angle,filter, 0)
             else:  # 1st phase, 2nd mag
-                processing.construct_image(s_mag, f_angle, 0)
+                processing.construct_image(s_mag, f_angle,filter, 0)
         else:  # crop magnitude or phase
             if data['flag']:  # 1st mag, 2nd phase
-                processing.construct_image(f_image.magnitude, s_image.angle,
+                processing.construct_image(f_image.magnitude, s_image.angle,filter,
                                            cropMag=data['magFirstCrop'], cropPhase=data['phaseSecondCrop'])
             else:  # 1st phase, 2nd mag
-                processing.construct_image(s_image.magnitude, f_image.angle,
+                processing.construct_image(s_image.magnitude, f_image.angle,filter,
                                            cropMag=data['magSecondCrop'], cropPhase=data['phaseFirstCrop'])
 
         # processing.crop_2d_img(
