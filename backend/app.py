@@ -21,6 +21,8 @@ def img():
         id = request.args.get('img')
         if "result" in id:
             return send_from_directory(directory=app.config['IMG_FOLDER'], path='result.png')
+        if "gray" in id:
+            return send_from_directory(directory=app.config['IMG_FOLDER'], path='gray.png')
         imgPath = str(id) + '.png'
         return send_from_directory(directory=app.config['IMG_FOLDER'], path=imgPath)
 
@@ -103,6 +105,6 @@ def construct():
         print(imgId)
         image = processing.db.fft_images[imgId]
         grayImage = image.image
-        cv2.imwrite('../backend/files/images/gray.png'+str(processing.counter.resultId), grayImage)
+        cv2.imwrite('../backend/files/images/gray.png', grayImage)
 
-    return {'gray_url': 'http://127.0.0.1:5000/api/img?img=gray'}
+    return {'gray_url': 'http://127.0.0.1:5000/api/img?img=gray'+str(processing.counter.resultId)}
