@@ -119,7 +119,7 @@ const CropSecondMagPhase = () => {
                       "magSecondCrop": magSecondCrop,
                       "phaseSecondCrop": phaseSecondCrop,
                       "mode": checkModeBinary,
-                      "flag": !checkMerge,
+                      "flag": checkMerge,
                       "filter": passModeBinary
                     }
                     ).then((response) => {
@@ -159,7 +159,7 @@ const CropSecondMagPhase = () => {
                       "magSecondCrop": magSecondCrop,
                       "phaseSecondCrop": phaseSecondCrop,
                       "mode": checkModeBinary,
-                      "flag": !checkMerge,
+                      "flag": checkMerge,
                       "filter": passModeBinary
                     }
                     ).then((response) => {
