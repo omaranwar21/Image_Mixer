@@ -67,13 +67,13 @@ const CropFirstImg = () => {
 
 
     useEffect(() => {
-        if (originalFirstURL === null && originalSecondURL === null) {
+        if (originalFirstURL === undefined && originalSecondURL === undefined) {
             setResultURL(undefined)
         }
     }, [originalFirstURL,originalSecondURL])
 
     useEffect(() => {
-        if (magnitudeFirstURL !== null && magnitudeSecondURL !== null) {
+        if (magnitudeFirstURL !== undefined && magnitudeSecondURL !== undefined) {
             axios.post('/select',
                 {
                     "fid": originalFirstImgId,
@@ -98,7 +98,7 @@ const CropFirstImg = () => {
     }, [magnitudeFirstURL,magnitudeSecondURL])
 
     useEffect(() => {
-        if (originalFirstURL === null && originalSecondURL !== null) {
+        if (originalFirstURL === undefined && originalSecondURL !== undefined) {
             axios.get(`/gray?imgId=${originalSecondImgId}`)
             .then((res) => {
                 console.log(res);
@@ -109,6 +109,19 @@ const CropFirstImg = () => {
             })
         }
     }, [originalFirstURL])
+
+    useEffect(() => {
+        if (magnitudeFirstURL !== undefined && magnitudeSecondURL === undefined) {
+            axios.get(`/gray?imgId=${originalFirstImgId}`)
+            .then((res) => {
+                console.log(res);
+                setResultURL(res.data.gray_url)
+            })
+            .catch((err)=> {
+                console.log(err);
+            })
+        }
+    }, [magnitudeFirstURL])
 
 
     const handleFileFirstUpload = (e) => {
@@ -141,9 +154,10 @@ const CropFirstImg = () => {
     };
 
     const handleImgDelete = () => {
-        setOriginalFirstURL(null)
-        setMagnitudeFirstURL(null)
-        setphaseFirstURL(null)
+        setOriginalFirstURL(undefined)
+        setMagnitudeFirstURL(undefined)
+        setphaseFirstURL(undefined)
+        setOriginalFirstImgId(null)
         setFirstFile(undefined)
         inputFile.current.value = null
     }

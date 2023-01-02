@@ -16,6 +16,7 @@ const CropSecondImg = () => {
         setSecondFile,
         checkMode,
         setCheckMode,
+        magnitudeFirstURL,
         originalSecondURL,
         setOriginalSecondURL,
         phaseSecondURL,
@@ -53,7 +54,7 @@ const CropSecondImg = () => {
     }, [secondFile])
 
     useEffect(() => {
-        if (originalSecondURL === null && originalFirstURL !== null) {
+        if (originalSecondURL === undefined && originalFirstURL !== undefined) {
             axios.get(`/gray?imgId=${originalFirstImgId}`)
             .then((res) => {
                 console.log(res);
@@ -65,6 +66,18 @@ const CropSecondImg = () => {
         }
     }, [originalSecondURL])
 
+    useEffect(() => {
+        if (magnitudeFirstURL === undefined && magnitudeSecondURL !== undefined) {
+            axios.get(`/gray?imgId=${originalSecondImgId}`)
+            .then((res) => {
+                console.log(res);
+                setResultURL(res.data.gray_url)
+            })
+            .catch((err)=> {
+                console.log(err);
+            })
+        }
+    }, [magnitudeSecondURL])
 
     const onFileSecondUpload = (e) => {
         setSecondFile(URL.createObjectURL(e.target.files[0]));
@@ -96,9 +109,10 @@ const CropSecondImg = () => {
     };
 
     const handleImgDelete = () => {
-        setOriginalSecondURL(null)
-        setMagnitudeSecondURL(null)
-        setphaseSecondURL(null)
+        setOriginalSecondURL(undefined)
+        setMagnitudeSecondURL(undefined)
+        setphaseSecondURL(undefined)
+        setOriginalSecondImgId(null)
         setSecondFile(undefined)
         inputFile.current.value = null
     }

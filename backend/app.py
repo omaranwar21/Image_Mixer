@@ -66,7 +66,12 @@ def select():
     if request.method == 'POST':
         processing.counter.resultId += 1
         data = request.get_json()
-        print(data)
+
+        if len(processing.db.fft_images) == 0:
+            return {"Error": "No data found!"}, 404
+        if data['fid'] == None or data['sid'] == None:
+            return {"Error": "Bad request!"}, 400
+
         f_image = processing.db.fft_images[str(data['fid'])]  # first image
         s_image = processing.db.fft_images[str(data['sid'])]  # second image
 
