@@ -67,6 +67,7 @@ def select():
         processing.counter.resultId += 1
         data = request.get_json()
         filter = data["filter"]
+        print(data)
 
         if len(processing.db.fft_images) == 0:
             return {"Error": "No data found!"}, 404
@@ -77,26 +78,26 @@ def select():
         s_image = processing.db.fft_images[str(data['sid'])]  # second image
 
         if data['mode']:  # crop from the orginal image
-            fcroped_image = f_image.crop_2d(data['firstCrop'],filter)
+            fcroped_image = f_image.crop_2d(data['firstCrop'], filter)
             f_mag, f_angle = processing.magnitude_angle(fcroped_image)
 
-            scroped_image = s_image.crop_2d(data['secondCrop'],filter)
+            scroped_image = s_image.crop_2d(data['secondCrop'], filter)
             s_mag, s_angle = processing.magnitude_angle(scroped_image)
 
             if data['flag']:  # 1st mag, 2nd phase
-                processing.construct_image(f_mag, s_angle,filter, 0)
+                processing.construct_image(f_mag, s_angle, filter, 0)
             else:  # 1st phase, 2nd mag
-                processing.construct_image(s_mag, f_angle,filter, 0)
+                processing.construct_image(s_mag, f_angle, filter, 0)
         else:  # crop magnitude or phase
             if data['flag']:  # 1st mag, 2nd phase
-                processing.construct_image(f_image.magnitude, s_image.angle,filter,
+                processing.plot_magnitude_phase(
+                    f_image.magnitude, s_image.angle, 0)
+                processing.construct_image(f_image.magnitude, s_image.angle, filter,
                                            cropMag=data['magFirstCrop'], cropPhase=data['phaseSecondCrop'])
             else:  # 1st phase, 2nd mag
-                processing.construct_image(s_image.magnitude, f_image.angle,filter,
+                processing.construct_image(s_image.magnitude, f_image.angle, filter,
                                            cropMag=data['magSecondCrop'], cropPhase=data['phaseFirstCrop'])
 
-        # processing.crop_2d_img(
-        #     0, [0,1, 0, 0, 1], data['x'], data['y'], data['width'], data['height'])
         return {"result_url": "http://127.0.0.1:5000/api/img?img=result"+str(processing.counter.resultId), "data": data}
 
 

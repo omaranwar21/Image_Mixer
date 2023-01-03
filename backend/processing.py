@@ -44,19 +44,18 @@ def magnitude_angle(image):
 #   return: constructed image.
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
-
 def construct_image(magnitude, angle, filter, mode=1, **kwargs):
     flag = 0
     if mode:
         cropMag = kwargs['cropMag']
         cropPhase = kwargs['cropPhase']
-        magnitude = crop_2d_img(magnitude, cropMag, filter)
-        angle = crop_2d_img(angle, cropPhase, filter)
-        if(cropPhase['height'] != 0 and cropPhase['width'] != 0):
+        croped_magnitude = crop_2d_img(magnitude, cropMag, filter)
+        croped_angle = crop_2d_img(angle, cropPhase, filter)
+        if(cropPhase['height'] != 0 and cropPhase['width'] != 0) or (int(cropPhase['height']) != 100 and int(cropPhase['width'] != 100)):
             flag = 1
-
-    combined = np.multiply(magnitude, np.exp(np.multiply(1j, angle)))
-    combined = np.fft.ifftshift(combined)
+    combined = np.multiply(croped_magnitude, np.exp(
+        np.multiply(1j, croped_angle)))
+    # combined = np.fft.ifftshift(combined)
     image_combined = np.abs(np.fft.ifft2(combined))
     if flag:
         image_combined = cv2.equalizeHist(image_combined.astype(np.uint8))
@@ -67,21 +66,22 @@ def construct_image(magnitude, angle, filter, mode=1, **kwargs):
 
 
 def crop_2d_img(image, data, filter):
-    if(data['height'] == 0 and data['width'] == 0):
+    if(data['height'] == 0 and data['width'] == 0) or (int(data['height']) == 100 and int(data['width'] == 100)):
         return image
 
     coordinates = points(data['x'], data['y'], data['width'], data['height'])
     if filter == 1:
         cutted_img = np.zeros_like(image)
     else:
-        cutted_img = image
-                
+        cutted_img = np.copy(image)
 
-    for x in range(int(coordinates[0]), int(coordinates[1])):
-        for y in range(int(coordinates[2]), int(coordinates[3])):
-            if filter == 1:
+    if filter == 1:
+        for x in range(int(coordinates[0]), int(coordinates[1])):
+            for y in range(int(coordinates[2]), int(coordinates[3])):
                 cutted_img[y, x] = image[y, x]
-            else:
+    else:
+        for x in range(int(coordinates[0]), int(coordinates[1])):
+            for y in range(int(coordinates[2]), int(coordinates[3])):
                 cutted_img[y, x] = 0
     return cutted_img
 
