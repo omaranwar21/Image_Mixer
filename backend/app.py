@@ -90,8 +90,6 @@ def select():
                 processing.construct_image(s_mag, f_angle, filter, 0)
         else:  # crop magnitude or phase
             if data['flag']:  # 1st mag, 2nd phase
-                processing.plot_magnitude_phase(
-                    f_image.magnitude, s_image.angle, 0)
                 processing.construct_image(f_image.magnitude, s_image.angle, filter,
                                            cropMag=data['magFirstCrop'], cropPhase=data['phaseSecondCrop'])
             else:  # 1st phase, 2nd mag

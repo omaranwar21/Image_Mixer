@@ -75,11 +75,11 @@ const FileContextProvider = ({ children }) => {
     // global 
     const [checkMerge, setCheckMerge] = useState(1)
     const [checkMode, setCheckMode] = useState(false);
-    const [checkModeBinary,setCheckModeBinary] = useState();
+    const [checkModeBinary, setCheckModeBinary] = useState();
     const [btnFlag, setBtnFlag] = useState(0)
     // result 
     const [resultURL, setResultURL] = useState()
-    const [passMode, setPassMode] = useState(false)
+    const [passMode, setPassMode] = useState(true)
     const [passModeBinary, setPassModeBinary] = useState(0)
 
     return (

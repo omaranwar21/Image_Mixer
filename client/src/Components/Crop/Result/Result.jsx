@@ -38,39 +38,44 @@ const Result = () => {
     }
   }, [passMode])
 
+
+  useEffect(() => {
+    axios.post('/select',
+      {
+        "fid": originalFirstImgId,
+        "firstCrop": firstCrop,
+        "sid": originalSecondImgId,
+        "secondCrop": secondCrop,
+        "magFirstCrop": magFirstCrop,
+        "phaseFirstCrop": phaseFirstCrop,
+        "magSecondCrop": magSecondCrop,
+        "phaseSecondCrop": phaseSecondCrop,
+        "mode": checkModeBinary,
+        "flag": checkMerge,
+        "filter": passModeBinary
+      }
+    ).then((response) => {
+      console.log(response)
+      setResultURL(response.data.result_url)
+    }).catch((err) => {
+      //console.log(err)
+    })
+  }, [passModeBinary])
+
   return (
     <div className='result'>
       <div className='switch'>
         <BootstrapSwitchButton
           className="custom-btn"
           checked={passMode}
-          onlabel='High Pass'
-          onstyle='primary'
-          offlabel='Low Pass'
-          offstyle='danger'
+          onlabel='Low Pass'
+          onstyle='danger'
+          offlabel='High Pass'
+          offstyle='primary'
           style='w-1000 mx-2'
           onChange={(e) => {
             setPassMode(!passMode)
-            axios.post('/select',
-              {
-                "fid": originalFirstImgId,
-                "firstCrop": firstCrop,
-                "sid": originalSecondImgId,
-                "secondCrop": secondCrop,
-                "magFirstCrop": magFirstCrop,
-                "phaseFirstCrop": phaseFirstCrop,
-                "magSecondCrop": magSecondCrop,
-                "phaseSecondCrop": phaseSecondCrop,
-                "mode": checkModeBinary,
-                "flag": checkMerge,
-                "filter": passModeBinary
-              }
-            ).then((response) => {
-              console.log(response)
-              setResultURL(response.data.result_url)
-            }).catch((err) => {
-              //console.log(err)
-            })
+
           }}
         />
       </div>
