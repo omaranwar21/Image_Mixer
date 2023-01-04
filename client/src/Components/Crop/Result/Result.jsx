@@ -64,30 +64,30 @@ const Result = () => {
 
   return (
     <div className='result'>
-      <div className='switch'>
-        <BootstrapSwitchButton
-          className="custom-btn"
-          checked={passMode}
-          onlabel='Low Pass'
-          onstyle='danger'
-          offlabel='High Pass'
-          offstyle='primary'
-          style='w-1000 mx-2'
-          onChange={(e) => {
-            setPassMode(!passMode)
+          <div className='filter-switch'>
+            <BootstrapSwitchButton
+              className="custom-btn"
+              checked={passMode}
+              onlabel='Low Pass'
+              onstyle='danger'
+              offlabel='High Pass'
+              offstyle='primary'
+              style='w-1000 mx-2'
+              onChange={(e) => {
+                setPassMode(!passMode)
 
-          }}
-        />
-      </div>
+              }}
+            />
+          </div>
       <div className='image-result'>
         <div className="borders up">
-          <div></div>
-          <div></div>
+          <div className='back'></div>
+          <div className='back'></div>
         </div>
         <img style={{ width: "40vh", height: "40vh", display: resultURL === undefined ? "none" : null }} src={resultURL} alt="" />
         <div className="borders down">
-          <div></div>
-          <div></div>
+          <div className='back'></div>
+          <div className='back'></div>
         </div>
       </div>
     </div>
