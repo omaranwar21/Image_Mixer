@@ -20,11 +20,13 @@ class Image:
         else:
             cutted_img = np.copy(self.image)
 
-        for x in range(int(coordinates[0]), int(coordinates[1])):
-            for y in range(int(coordinates[2]), int(coordinates[3])):
-                if filter == 1:
+        if filter == 1:
+            for x in range(int(coordinates[0]), int(coordinates[1])):
+                for y in range(int(coordinates[2]), int(coordinates[3])):
                     cutted_img[y, x] = self.image[y, x]
-                else:
+        else:
+            for x in range(int(coordinates[0]), int(coordinates[1])):
+                for y in range(int(coordinates[2]), int(coordinates[3])):
                     cutted_img[y, x] = 0
 
         return cutted_img

@@ -46,13 +46,16 @@ def magnitude_angle(image):
 
 def construct_image(magnitude, angle, filter, mode=1, **kwargs):
     flag = 0
+    croped_magnitude = np.copy(magnitude)
+    croped_angle = np.copy(angle)
     if mode:
         cropMag = kwargs['cropMag']
         cropPhase = kwargs['cropPhase']
         croped_magnitude = crop_2d_img(magnitude, cropMag, filter)
         croped_angle = crop_2d_img(angle, cropPhase, filter)
-        if(cropPhase['height'] != 0 and cropPhase['width'] != 0) or (int(cropPhase['height']) != 100 and int(cropPhase['width'] != 100)):
+        if(cropPhase['height'] != 0 and cropPhase['width'] != 0):
             flag = 1
+
     combined = np.multiply(croped_magnitude, np.exp(
         np.multiply(1j, croped_angle)))
     # combined = np.fft.ifftshift(combined)
