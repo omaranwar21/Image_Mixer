@@ -7,8 +7,8 @@ matplotlib.use('Agg')
 
 class FFT_Image(Image):
 
-    def __init__(self, id, image_path, flag=1):
-        super().__init__(id, image_path, flag)
+    def __init__(self,image_path, flag=1):
+        super().__init__(image_path, flag)
 
     def fourier_2D(self):
         # calling user defined function to get magnitude and phase of the first image
@@ -30,6 +30,7 @@ class FFT_Image(Image):
         # inverse_phase = np.fft.ifft2(phase)
         plt.axis('off')
         plt.imshow(np.abs(np.log(mag)), cmap="gray")
+        # plt.margins(x=0, y=-0.25) 
         plt.savefig('./files/images/mag'+str(counter.imgId),
                     bbox_inches='tight', pad_inches=0)
         plt.clf()

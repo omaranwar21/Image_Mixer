@@ -147,9 +147,9 @@ const CropSecondImg = () => {
                     <button onClick={handleButtonClick}>
                         <BsFillCloudUploadFill />
                     </button>
-                    <button onClick={handleImgDelete}>
+                    {/* <button onClick={handleImgDelete}>
                         <AiTwotoneDelete />
-                    </button>
+                    </button> */}
                     <input
                         type='file'
                         id='file'

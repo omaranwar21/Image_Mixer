@@ -201,9 +201,9 @@ const CropFirstImg = () => {
                         <button onClick={handleButtonClick}>
                             <BsFillCloudUploadFill />
                         </button>
-                        <button onClick={handleImgDelete}>
+                        {/* <button onClick={handleImgDelete}>
                             <AiTwotoneDelete />
-                        </button>
+                        </button> */}
                     </div>
                     <div className='switch'>
                         <BootstrapSwitchButton

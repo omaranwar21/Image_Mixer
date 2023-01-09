@@ -31,18 +31,13 @@ def img():
         if "Img" not in request.files:
             return {"Error": 'File Not Found'}, 404
 
-        flag = 1
-
         imageFile = request.files["Img"]
         imgId = str(processing.counter.imgId)
         fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
         imageFile.save(fullPath)
 
-        gray = request.args.get('gray')
-        if gray:
-            flag = 0
-        image = Image(imgId, fullPath, flag=flag)
-        cv2.imwrite(fullPath, image.image)
+        image = Image(fullPath)
+        image.save()
 
         # processing.resize_image(fullPath)
         return {"img_url": "http://127.0.0.1:5000/api/img?img="+imgId, "imgId": imgId}, 200
@@ -52,7 +47,7 @@ def img():
 def combImgs():
     imgId = str(request.args.get('imgId'))
     fullPath = os.path.join(IMG_FOLDER, imgId + '.png')
-    fft_image = FFT_Image(counter.imgId, fullPath, flag=0)
+    fft_image = FFT_Image(fullPath, flag=0)
     fft_image.fourier_2D()
     processing.db.fft_images[imgId] = fft_image
 
@@ -67,7 +62,6 @@ def select():
         processing.counter.resultId += 1
         data = request.get_json()
         filter = data["filter"]
-        print(data)
 
         if len(processing.db.fft_images) == 0:
             return {"Error": "No data found!"}, 404

@@ -45,23 +45,19 @@ def magnitude_angle(image):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 def construct_image(magnitude, angle, filter, mode=1, **kwargs):
-    flag = 0
     croped_magnitude = np.copy(magnitude)
     croped_angle = np.copy(angle)
-    if mode:
+    if mode: #crop in mag or phase
         cropMag = kwargs['cropMag']
         cropPhase = kwargs['cropPhase']
         croped_magnitude = crop_2d_img(magnitude, cropMag, filter)
         croped_angle = crop_2d_img(angle, cropPhase, filter)
-        if(cropPhase['height'] != 0 and cropPhase['width'] != 0):
-            flag = 1
 
     combined = np.multiply(croped_magnitude, np.exp(
         np.multiply(1j, croped_angle)))
-    # combined = np.fft.ifftshift(combined)
+    combined = np.fft.ifftshift(combined)
     image_combined = np.abs(np.fft.ifft2(combined))
-    if flag:
-        image_combined = cv2.equalizeHist(image_combined.astype(np.uint8))
+    image_combined = cv2.equalizeHist(image_combined.astype(np.uint8))
 
     cv2.imwrite('../backend/files/images/result.png', image_combined)
     return image_combined
@@ -70,36 +66,20 @@ def construct_image(magnitude, angle, filter, mode=1, **kwargs):
 
 def crop_2d_img(image, data, filter):
     if(data['height'] == 0 and data['width'] == 0) or (int(data['height']) == 100 and int(data['width'] == 100)):
-        return image
+        return image  
 
-    coordinates = points(data['x'], data['y'], data['width'], data['height'])
-    if filter == 1:
+    x = int((data['x']/100)*1200)
+    y = int((data['y']/100)*1200)
+    height = int((data['height']/100)*1200)
+    width = int((data['width']/100)*1200)
+
+
+    if filter == 1: # select inside
         cutted_img = np.zeros_like(image)
-    else:
+        cutted_img[y:y+height, x:x+width] = image[y:y+height, x:x+width]
+    else: # select outside
         cutted_img = np.copy(image)
+        cutted_img[y:y+height, x:x+width] = 0
 
-    if filter == 1:
-        for x in range(int(coordinates[0]), int(coordinates[1])):
-            for y in range(int(coordinates[2]), int(coordinates[3])):
-                cutted_img[y, x] = image[y, x]
-    else:
-        for x in range(int(coordinates[0]), int(coordinates[1])):
-            for y in range(int(coordinates[2]), int(coordinates[3])):
-                cutted_img[y, x] = 0
     return cutted_img
 
-
-def points(x_percentage, y_percentage, width, height):
-    coordinates = []
-
-    x_minimum = (x_percentage/100)*1400
-    coordinates.append(x_minimum)
-    x_maximum = ((x_percentage/100)*1400) + ((width/100)*1400)
-    coordinates.append(x_maximum)
-
-    y_minimum = (y_percentage/100)*1400
-    coordinates.append(y_minimum)
-    y_maximum = ((y_percentage/100)*1400) + ((height/100)*1400)
-    coordinates.append(y_maximum)
-
-    return coordinates

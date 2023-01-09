@@ -68,14 +68,13 @@ const Result = () => {
             <BootstrapSwitchButton
               className="custom-btn"
               checked={passMode}
-              onlabel='Low Pass'
+              onlabel='Inside'
               onstyle='danger'
-              offlabel='High Pass'
+              offlabel='Outside'
               offstyle='primary'
               style='w-1000 mx-2'
               onChange={(e) => {
                 setPassMode(!passMode)
-
               }}
             />
           </div>
