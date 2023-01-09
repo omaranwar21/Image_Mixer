@@ -1,0 +1,6 @@
+Flask
+Gunicorn
+numpy
+opencv-python
+flask-cors
+matplotlib
