@@ -26,7 +26,7 @@ Image Mixer is a website that allows the user to apply filters on two images the
 ## Application Demo
 
 <p align="center">
- <img src=""/>
+ <img src="ReadMe\Demo.png"/>
 </p>
 
 ## Run The project
